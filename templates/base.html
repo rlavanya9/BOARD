@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+
+  <!-- We'll load React dependencies on all pages for this app. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js" crossorigin></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+
+  <!--react router Dom-->
+  <script src="https://unpkg.com/react-router/umd/react-router.min.js"></script>
+  <script src="https://unpkg.com/react-router-dom/umd/react-router-dom.min.js"></script>
+
+  <!--styled components-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/styled-components/5.2.1/styled-components.min.js" integrity="sha512-lzASbW0hyzHBbXLn4vqlR8V9az75mayKbzAfgbFvuzNEqSJ8jW+GAiygwupbhLUp6C+ZaWo1ryS7JYujhXgeww==" crossorigin="anonymous"></script>
+
+  <!-- <link href="/static/css/index.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="/static/css/App.css" rel="stylesheet">
+  <link href="/static/css/Button.css" rel="stylesheet">
+  <link href="/static/css/index.css" rel="stylesheet">
+  <link href="/static/css/Navbar.css" rel="stylesheet">
+  <link href="/static/css/home.css" rel="stylesheet">
+
+  <!--font-awesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+
+
+</head>
+<body>
+  <!-- Include the page's content with this block. -->
+  {% block body %}
+  {% endblock %}
+
+  <!-- Include any page-specific Javascript using this block. -->
+  {% block js %}
+  {% endblock %}
+</body>
+</html>
