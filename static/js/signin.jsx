@@ -1,8 +1,8 @@
 const Link =  window.ReactRouterDOM.Link;
+const styled = window.styled;
 
 
-
-const container =styled.div`
+const container = styled.div`
 min-height: 692px;
 position: fixed;
 bottom: 0;
@@ -26,7 +26,7 @@ justify-content: center;
 `;
 
 
-const Icon = Styled(Link)`
+const Icon = styled.div`
 margin-left: 32px;
 margin-right: 32px;
 text-decoration: none;
@@ -117,8 +117,8 @@ const SignIn = () => {
                         <FormH1> sign in to your account </FormH1>
                         <FormLabel htmlFor='for'>Email</FormLabel>
                         <FormInput type='email' required />
-                        <FormLabel htmlFor='for'>Email</FormLabel>
-                        <FormInput type='email' required />
+                        <FormLabel htmlFor='for'>Password</FormLabel>
+                        <FormInput type='password' required />
                         <FormButton type='submit'> Continue </FormButton>
                         <Text>Forgot password</Text>
                     </Form>
@@ -130,7 +130,7 @@ const SignIn = () => {
 
 function Signin() {
     return (
-      <div className="App">
+      <div className="Signin">
         <SignIn />
       </div>
     );

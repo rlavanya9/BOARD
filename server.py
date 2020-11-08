@@ -21,7 +21,17 @@ def sign_in():
 
     return render_template('signin.html')
 
+@app.route('/todo')
+def to_do():
+    """Show the application's homepage."""
 
+    return render_template('todo.html')
+
+@app.route('/vproject')
+def view_project():
+    """Show the application's homepage."""
+
+    return render_template('viewproject.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
