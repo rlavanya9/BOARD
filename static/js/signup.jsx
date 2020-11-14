@@ -107,20 +107,19 @@ font-size: 14px;
 `;
 
 
-const SignIn = () => {
+const SignUp = () => {
     return (
         <React.Fragment>
             <FormWrap>
-                <Icon to="/">TODO</Icon>
+            <Icon to="/">TODO</Icon>
                 <FormContent>
                     <Form action="#">
-                        <FormH1> sign in to your account </FormH1>
+                        <FormH1> sign up for new account </FormH1>
                         <FormLabel htmlFor='for'>Email</FormLabel>
                         <FormInput type='email' required />
-                        <FormLabel htmlFor='for'>Password</FormLabel>
+                        <FormLabel htmlFor='for'>Set Password</FormLabel>
                         <FormInput type='password' required />
-                        <FormButton type='submit'> Continue </FormButton>
-                        <Text>Forgot password</Text>
+                        <FormButton type='submit'> Sign Up </FormButton>
                     </Form>
                 </FormContent>
             </FormWrap>
@@ -128,10 +127,10 @@ const SignIn = () => {
     )
 } 
 
-function Signin() {
+function SignUppage() {
     return (
-      <div className="Signin">
-        <SignIn />
+      <div className="Signup">
+        <SignUp />
       </div>
     );
   }

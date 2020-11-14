@@ -23,6 +23,44 @@
   <!--styled components-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/styled-components/5.2.1/styled-components.min.js" integrity="sha512-lzASbW0hyzHBbXLn4vqlR8V9az75mayKbzAfgbFvuzNEqSJ8jW+GAiygwupbhLUp6C+ZaWo1ryS7JYujhXgeww==" crossorigin="anonymous"></script>
 
+  <!--react spring-->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-spring/9.0.0-rc.3/web.cjs.js" integrity="sha512-OZyb1WXjMdC/Ux3RTmvzYCv35jx7RVheCZU2g9P7IJt2phEcANOukRhSnVWvOJ3a7skfV43G8dSxrzpG95N2Fg==" crossorigin="anonymous"></script> -->
+
+  <!--React Datepicker-->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/3.3.0/react-datepicker.min.js" integrity="sha512-f+CHNNvy5P3yCaZxks2WolxiVx/7q/2UN4LAjIrB/uSA1U0r+HKsLreGaEFUzGFFi3eNyW+fTybRSOqS4CJbww==" crossorigin="anonymous"></script> -->
+
+  <!--React Datepicker CSS-->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/3.3.0/react-datepicker-cssmodules.css" integrity="sha512-7HnzBcx/T7aFsr1nx0I1aqdF9Av8HiehFgyvNUfZmjAf77Hl7JioSL1h35GlfgzcQhVjyRLXKB2siKT6YvOe9w==" crossorigin="anonymous" /> -->
+  
+  <!--React datepicker-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react-datetime/3.0.0/react-datetime.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/react-datetime/3.0.0/css/react-datetime.min.css" rel="stylesheet" type="text/css">
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.2.0/css/uikit.min.css" rel="stylesheet" type="text/css"> -->
+
+
+  <!--React Components-->
+
+  <script src="/static/js/label.jsx" type="text/jsx"></script>
+  <script src="/static/js/favourites.jsx" type="text/jsx"></script>
+  <script src="/static/js/todo.jsx" type="text/jsx"></script>
+  <script src="/static/js/calendar.jsx" type="text/jsx"></script>
+  <script src="/static/js/addproject.jsx" type="text/jsx"></script>
+  <script src="/static/js/projectcards.jsx" type="text/jsx"></script>
+  <script src="/static/js/upcoming.jsx" type="text/jsx"></script>
+  <script src="/static/js/today.jsx" type="text/jsx"></script>
+  <script src="/static/js/home.jsx" type="text/jsx"></script> 
+  <script src="/static/js/welcome.jsx" type="text/jsx"></script> 
+  <script src="/static/js/Appx.jsx" type="text/jsx"></script>
+  
+  
+  
+  
+  
+  
+  
+
+
   <!-- <link href="/static/css/index.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
@@ -32,6 +70,7 @@
   <link href="/static/css/Navbar.css" rel="stylesheet">
   <link href="/static/css/home.css" rel="stylesheet">
   <link href="/static/css/todo.css" rel="stylesheet">
+  <link href="/static/css/calendar.css" rel="stylesheet">
 
   <!--font-awesome-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -42,6 +81,8 @@
 <body>
   <!-- Include the page's content with this block. -->
   {% block body %}
+  <!-- Mount your react components on to this element. -->
+  <div id="root"></div>
   {% endblock %}
 
   <!-- Include any page-specific Javascript using this block. -->

@@ -1,0 +1,20 @@
+.calendar-container {
+    width: 260px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .date-button {
+    width: 100%;
+    border-radius: 2px;
+  }
+  
+  .form-control {
+    display: none;
+  }
+  
+  .rdtDays, .rdtTime {
+    border: 1px solid #ebebeb;
+  }

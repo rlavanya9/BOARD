@@ -124,14 +124,14 @@ function TodoList() {
 
 
 
-function TodoAll() {
-    return (
-      <div className="todo-app"> 
-        <TodoList />
-      </div>
-    );
-  }
+// function TodoAll() {
+//     return (
+//       <div className="todo-app"> 
+//         <TodoList />
+//       </div>
+//     );
+//   }
   
   // export default App;
   
-  ReactDOM.render(<TodoAll />, document.getElementById('todo'));
+  

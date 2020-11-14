@@ -131,4 +131,4 @@ function ViewProject() {
   
   // export default App;
   
-  ReactDOM.render(<ViewProject />, document.getElementById('cards'));
+  
