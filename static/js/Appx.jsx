@@ -1,48 +1,69 @@
 
+  const Router = window.ReactRouterDOM.BrowserRouter;
+  const Route =  window.ReactRouterDOM.Route;
+  const Link =  window.ReactRouterDOM.Link;
+  const Prompt =  window.ReactRouterDOM.Prompt;
+  const Switch = window.ReactRouterDOM.Switch;
+  const Redirect = window.ReactRouterDOM.Redirect;
+  const useHistory = window.ReactRouterDOM.useHistory; 
+  
   function App() {
-    const Router = window.ReactRouterDOM.BrowserRouter;
-    const Route =  window.ReactRouterDOM.Route;
-    const Link =  window.ReactRouterDOM.Link;
-    const Prompt =  window.ReactRouterDOM.Prompt;
-    const Switch = window.ReactRouterDOM.Switch;
-    const Redirect = window.ReactRouterDOM.Redirect;
+    
+    function getEmail() {
+        const email = localStorage.getItem('email');
+        if (email) {
+            return JSON.parse(email)
+        
+        } else {
+            return ''
+        }
+
+    }
+
+    const [email, setEmail] = useState(getEmail);
+    console.log(email)
 
     return (
       <div className="App">
-          <React.Fragment>
           <Router>
             <Switch>
                 <Route exact path='/' >
                     <Navbar />
-                    <SignIn />
+                    <SignIn setEmail={setEmail}/>
+                </Route>
+                <Route path='/signup' >
+                    <SignUp setEmail={setEmail}/>
                 </Route>
                 <Route path='/home' >
-                    <Navside />
-                </Route>
-                <Route path='/today'>
-                    <Navside />
-                    <Today />
-                </Route> 
-                <Route path='/upcoming' >
-                    <Navside />
-                    <Upcoming />
+                    <Navside email={email}/>
                 </Route>
                 <Route path='/projects'>
-                    <Navside />
-                    <ViewProject />
-                    <Addproj />
+                    <Navside email={email}/>
+                    {/* <ViewProject email={email}/> */}
+                    <Addproj email={email}/>
                 </Route>
+                <Route path='/allproj'>
+                    <Navside email={email}/>
+                    <AllProj email={email}/>
+                </Route>
+                <Route path='/today'>
+                    <Navside email={email}/>
+                    <Today email={email}/>
+                </Route> 
+                <Route path='/upcoming' >
+                    <Navside email={email}/>
+                    <Upcoming email={email}/>
+                </Route> 
                 <Route path='/favourites'>
-                    <Navside />
-                    <Favourites />
+                    <Navside email={email}/>
+                    <Favourites email={email}/>
                 </Route>
                 <Route path='/label'> 
-                    <Navside />
-                    <Label />
+                    <Navside email={email}/>
+                    <Label email={email}/>
                 </Route>
             </Switch> 
           </Router>
-        </React.Fragment>
       </div>
     );
   }

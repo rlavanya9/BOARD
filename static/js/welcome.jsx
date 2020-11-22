@@ -70,7 +70,7 @@ const MenuItems = [
     },
     {
         title: 'Sign Up',
-        url: '#',
+        url: '/signup',
         cName: 'nav-links-mobile'
     },
   
@@ -131,7 +131,7 @@ const MenuItems = [
                     )
                 })}
             </ul>
-            <Button>Sign Up</Button>
+            <Button> <Link to='/signup'>Sign Up</Link> </Button>
         </nav>
     )
   };
@@ -242,19 +242,56 @@ cursor: pointer;
 // `;
 
 
-const SignIn = () => {
+
+const SignIn = (props) => {
+
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const history = useHistory();
+
+    
+    function handleSubmit(evt){
+        evt.preventDefault()
+        let data = {email:email, password:password}
+        fetch('/login',{method: "POST",  body: JSON.stringify(data),  headers: {
+          'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => {
+            console.log('this is the data from front end')
+            console.log(data);
+            // if (data == 'Logged in successfully') {
+            if (data == email) {
+                props.setEmail(data);
+                localStorage.setItem('email', JSON.stringify(data));
+                history.push('/home')
+        }   else {
+             alert('Invalid username or password. please check and try again.')
+            };
+        });
+        
+    }
+      
+    function handleEmailChange(evt){
+        setEmail(evt.target.value)
+      }
+    
+    
+      function handlePasswordChange(evt){
+        setPassword(evt.target.value)
+      }
+
     return (
         <React.Fragment>
             <FormWrap>
                 <FormContent>
-                    <Form action="/home">
+                    <Form onSubmit={handleSubmit}>
                         <FormH1> sign in to your account </FormH1>
                         <FormLabel htmlFor='for'>Email</FormLabel>
-                        <FormInput type='email' required />
+                        <FormInput type='email' onChange={handleEmailChange} required />
                         <FormLabel htmlFor='for'>Password</FormLabel>
-                        <FormInput type='password' required />
-                        <FormButton type='submit'> 
-                        <Link to='/home'>Continue</Link>
+                        <FormInput type='password' onChange={handlePasswordChange} required />
+                        <FormButton type='submit'> Continue
+                        {/* <Link to='/home'>Continue</Link> */}
                         </FormButton>
                         {/* <Text>Forgot password</Text> */}
                     </Form>

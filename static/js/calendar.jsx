@@ -1,10 +1,12 @@
-// import DatePicker from 'react-detepicker'
+// import DatePicker from 'react-datepicker'
 // import 'react-datepicker/dist/react-datepicker.css'
 // const useState = React.useState
 
-// function Date() {
+// const DatePicker = window.DatePicker
 
-//     const [selectedDate, setSelectDate] = useState(null)
+// function Calendar() {
+
+//     const [selectedDate, setSelectDate] = React.useState(null)
 //     return (
 //         <div className="Cal">
 //             <DatePicker selected={selectedDate} onChange={date => setSelectDate(date)}
@@ -21,6 +23,8 @@
 //         </div>
 //     );
 // }
+
+// old date picker logic
 
 const { useEffect, useRef, useState, useCallback } = React;
 
@@ -56,7 +60,8 @@ const { useEffect, useRef, useState, useCallback } = React;
             <button className="uk-button uk-button-primary date-button" onClick={openCalendar}>{!state.isOpen ? "Select Date" : "Close"}</button>
             { state.isOpen && <Datetime input={false} onChange={handleDateChange}></Datetime>}
            </div>
-           { state.date && <p>Selected Date: {moment(state.date).format("MM/DD/YYYY hh:mm a")}</p> }
+           {/* { state.date && <p>Selected Date: {moment(state.date).format("MM/DD/YYYY hh:mm a")}</p> } */}
+           { state.date && <p>Selected Date: {moment(state.date).format("MM/DD/YYYY")}</p> }
          </div>
         );
       }

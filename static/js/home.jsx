@@ -1,7 +1,25 @@
 const SidebarData = [
     {
+        title: 'Add Projects',
+        path: '/projects',
+        cName: 'nav-text'
+    },
+    
+    {
+        title: 'All Projects',
+        path: '/allproj',
+        cName: 'nav-text'
+    },
+
+    {
         title: 'Today',
         path: '/today',
+        cName: 'nav-text'
+    },
+
+    {
+        title: 'Past Due',
+        path: '/pastdue',
         cName: 'nav-text'
     },
     {
@@ -9,11 +27,7 @@ const SidebarData = [
         path: '/upcoming',
         cName: 'nav-text'
     },
-    {
-        title: 'Projects',
-        path: '/projects',
-        cName: 'nav-text'
-    },
+
     {
         title: 'Favourites',
         path: '/favourites',
@@ -43,11 +57,11 @@ const Menuside = [
         url: '#',
         cName: 'nav-links'
     },
-//     {
-//         title: 'Sign Up',
-//         url: '#',
-//         cName: 'nav-links-mobile'
-//     },
+    {
+        title: 'Logout',
+        url: '#',
+        cName: 'nav-links'
+    },
   
   ]
 

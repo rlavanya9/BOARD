@@ -1,140 +1,214 @@
 const Link =  window.ReactRouterDOM.Link;
 const styled = window.styled;
 
-
-const container = styled.div`
-min-height: 692px;
-position: fixed;
-bottom: 0;
-left: 0;
-right: 0;
-top: 0;
-z-index: 0;
-overflow: hidden;
-background: linear-gradient(108deg, rgba(1, 147, 86, 1) 0%, rgba(10, 201, 122, 1) 100%);
-`;
-
-const FormWrap = styled.div`
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-
-@media screen and (max-width: 400px) {
-    height: 80%
-}
-`;
-
-
-const Icon = styled.div`
-margin-left: 32px;
-margin-right: 32px;
-text-decoration: none;
-color: #fff;
-font-weight: 700;
-font-size: 32px;
-
-@media screen and (max-width: 400px) {
-    margin-left: 16px;
-    margin-top: 8px;
-}
-`;
-
-const FormContent = styled.div`
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-
-@media screen and (max-width: 480px){
-    padding: 10px
-}
-`;
-
-const Form = styled.form`
-background: #010101;
-max-width: 400px;
-height: auto;
-width: 100%;
-z-index: 1;
-display: grid;
-margin: 0 auto;
-padding: 80px 32px;
-border-radius: 4px;
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-
-@media screen and (max-width: 400px) {
-    padding: 32px 32px;
-}
-`;
-
-const FormH1 = styled.h1`
-margin-bottom: 40px;
-color: #fff;
-font-size: 20px;
-font-weight: 400;
-text-align: center;
-`;
-
-const FormLabel = styled.label`
-margin-bottom: 8px;
-font-size: 14px;
-color: #fff;
-`;
-
-const FormInput = styled.input`
-padding: 16px 16px;
-margin-bottom: 32px;
-border: none;
-border-radius: 4px;
-`;
-
-const FormButton = styled.button`
-background: #01bf71;
-padding: 16px 0;
-border: None;
-border-radius: 4px;
-color: #fff;
-font-size: 20px;
-cursor: pointer;
-`;
-
-const Text = styled.span`
-text-align: center;
-margin-top: 24px;
-color: #fff;
-font-size: 14px; 
-`;
-
-
-const SignUp = () => {
-    return (
-        <React.Fragment>
-            <FormWrap>
-            <Icon to="/">TODO</Icon>
-                <FormContent>
-                    <Form action="#">
-                        <FormH1> sign up for new account </FormH1>
-                        <FormLabel htmlFor='for'>Email</FormLabel>
-                        <FormInput type='email' required />
-                        <FormLabel htmlFor='for'>Set Password</FormLabel>
-                        <FormInput type='password' required />
-                        <FormButton type='submit'> Sign Up </FormButton>
-                    </Form>
-                </FormContent>
-            </FormWrap>
-        </React.Fragment>
-    )
+function validate(values) {
+    let errors = {};
+  
+    // if (!values.username.trim()) {
+    //   errors.username = 'Username required';
+    // }
+    // else if (!/^[A-Za-z]+/.test(values.name.trim())) {
+    //   errors.name = 'Enter a valid name';
+    // }
+  
+    if (!values.email) {
+      errors.email = 'Email required';
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = 'Email address is invalid';
+    }
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (values.password.length < 6) {
+      errors.password = 'Password needs to be 6 characters or more';
+    }
+  
+    if (!values.password2) {
+      errors.password2 = 'Password is required';
+    } else if (values.password2 !== values.password) {
+      errors.password2 = 'Passwords do not match';
+    }
+return errors; 
 } 
 
-function SignUppage() {
+const useForm = (callback, validate) => {
+    const [values, setValues] = useState({
+    //   username: '',
+      email: '',
+      password: '',
+      password2: ''
+    });
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    // const [email, setValues] = React.useState('')
+    // const [password, setValues] = React.useState('')
+    const history = useHistory();
+  
+    const handleChange = e => {
+      const { name, value } = e.target;
+      setValues({
+        ...values,
+        [name]: value
+      });
+      console.log('********name and value*******')
+      console.log(name)
+      console.log(value)
+      console.log('*****name and value*********')
+    };
+    // function handleEmailChange(evt){
+    //     console.log('emailchange')
+    //     setValues(evt.target.value)
+    // }
+    // function handlePswdChange(evt){
+    //     console.log('pswdchange')
+    //     setValues(evt.target.value)
+    // }
+
+    // function handlePswd2Change(evt){
+    //     console.log('pswd2change')
+    //     setValues(evt.target.value)
+    // }
+  
+    const handleSubmit = e => {
+      e.preventDefault();
+    
+      setErrors(validate(values));
+      setIsSubmitting(true);
+      let data = {email:values.email, password:values.password}
+      fetch('/signup',{method: "POST",  body: JSON.stringify(data),  headers: {
+        'Content-Type': 'application/json'}} )
+      .then(response => response.json())
+      .then(data => {
+            console.log(data);
+            if (data == 'Account created! please log in') {
+                props.setEmail(data);
+                localStorage.setItem('email', JSON.stringify(data));
+                // setIsSubmitting(true);
+                history.push('/')
+      }     else {
+                alert('Email already in use, cannot create account.')
+           };
+    });
+      
+  };
+    
+      
+  
+    useEffect(
+      () => {
+        if (Object.keys(errors).length === 0 && isSubmitting) {
+          callback();
+        }
+      },
+      [errors]
+    );
+  
+    return { handleChange, handleSubmit, values, errors };
+  };
+
+const FormSignup = ({ submitForm }) => {
+    const { handleChange, handleSubmit, values, errors } = useForm(
+      submitForm,
+      validate
+    );
+  
     return (
-      <div className="Signup">
-        <SignUp />
+      <div className='form-content-right'>
+        <form onSubmit={handleSubmit} className='form' noValidate>
+          <h1>
+            Get started with us today! Create your account by filling out the
+            information below.
+          </h1>
+          {/* <div className='form-inputs'>
+            <label className='form-label'>Username</label>
+            <input
+              className='form-input'
+              type='text'
+              name='username'
+              placeholder='Enter your username'
+              value={values.username}
+              onChange={handleChange}
+            />
+            {errors.username && <p>{errors.username}</p>}
+          </div> */}
+          <div className='form-inputs'>
+            <label className='form-label'>Email</label>
+            <input
+              className='form-input'
+              type='email'
+              name='email'
+              placeholder='Enter your email'
+              value={values.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p>{errors.email}</p>}
+          </div>
+          <div className='form-inputs'>
+            <label className='form-label'>Password</label>
+            <input
+              className='form-input'
+              type='password'
+              name='password'
+              placeholder='Enter your password'
+              value={values.password}
+              onChange={handleChange}
+            />
+            {errors.password && <p>{errors.password}</p>}
+          </div>
+          <div className='form-inputs'>
+            <label className='form-label'>Confirm Password</label>
+            <input
+              className='form-input'
+              type='password'
+              name='password2'
+              placeholder='Confirm your password'
+              value={values.password2}
+              onChange={handleChange}
+            />
+            {errors.password2 && <p>{errors.password2}</p>}
+          </div>
+          <button className='form-input-btn' type='submit'>
+            Sign up
+          </button>
+          <span className='form-input-login'>
+            Already have an account? Login <Link to='/'>here</Link>
+          </span>
+        </form>
       </div>
     );
-  }
+  };
+
+  const FormSuccess = () => {
+    return (
+      <div className='form-content-right'>
+        <h1 className='form-success'>Account Created</h1>
+        <button className='form-input-btn'><Link to='/'>Login now </Link></button>
+        <img className='form-img-4' src='/static/img/img-4.svg' alt='success-image' />
+        
+      </div>
+    );
+  };
+
   
-  // export default App;
+
+  const SignUp = () => {
+    const [isSubmitted, setIsSubmitted] = React.useState(false);
   
-  
+    function submitForm() {
+      setIsSubmitted(true);
+    }
+    return (
+      <React.Fragment>
+        <div className='form-container'>
+          <span className='close-btn'>×</span>
+          <div className='form-content-left'>
+            <img className='form-img' src='/static/img/img-1.svg' alt='form image' />
+          </div>
+          {!isSubmitted ? (
+            <FormSignup submitForm={submitForm} />
+          ) : (
+            <FormSuccess />
+          )}
+        </div>
+      </React.Fragment>
+    );
+  };

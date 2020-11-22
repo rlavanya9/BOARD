@@ -10,11 +10,13 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(20), unique=True, nullable=False)
-    password = db.Column(db.String(30))
+    password = db.Column(db.String(30), nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
 
 
     def __repr__(self):
-        return f'<User: user = {self.user_id} email = {self.email}>'
+        if self.is_active:      
+            return f'<User: user = {self.user_id} email = {self.email}>'
 
 class Project(db.Model):
     """A project."""
@@ -35,7 +37,7 @@ class Label(db.Model):
     __tablename__ = 'labels'
 
     label_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    label_name = db.Column(db.String(20), unique=True)
+    label_name = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.project_id'))
 
@@ -47,7 +49,7 @@ class Label(db.Model):
 
 
 class Favourite(db.Model):
-    """Favourites""""
+    """Favourites"""
     __tablename__ = 'favourites'
 
     favs_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -58,23 +60,23 @@ class Favourite(db.Model):
     project = db.relationship('Project', backref='favourites')
 
     def __repr__(self):
-        return f'<Favourite: favs_id={self.favs_id}'>
+        return f'<Favourite: favs_id={self.favs_id}>'
 
 class Task(db.Model):
     """Tasks table"""
     __tablename__ = 'tasks'
 
     task_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    task_item = db.Column(db.String(20), Unique=True)
+    task_item = db.Column(db.String(20))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.project_id'))
-    is_active = db.Column(db.Boolean)
-    order_id = db.Column(db.Integer, autoincrement=True)
+    is_active = db.Column(db.Boolean, default=True)
+    order_id = db.Column(db.Integer)
     assignee = db.Column(db.String(30))
 
     project = db.relationship('Project', backref='tasks')
 
     def __repr__(self):
-        return f'<Task: task_item={self.task_item} assignee={self.assignee} is_active={self.is_active}'>
+        return f'<Task: task_item={self.task_item} assignee={self.assignee} is_active={self.is_active}>'
 
 class Collaborator(db.Model):
     """collaborator"""
@@ -88,11 +90,11 @@ class Collaborator(db.Model):
     project = db.relationship('Project', backref='collaborators')
 
     def __repr__(self):
-        return f'<Collaborator: collab_id={self.collab_id}'>
+        return f'<Collaborator: collab_id={self.collab_id}>'
 
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///mytodo', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

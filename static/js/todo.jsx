@@ -1,6 +1,7 @@
 
 function TodoForm(props) {
     const [input, setInput] = React.useState(props.edit ? props.edit.value: '')
+    
 
     const inputRef = React.useRef(null)
 
@@ -18,9 +19,18 @@ function TodoForm(props) {
 
         props.onSubmit({
             id: Math.floor(Math.random() * 10000),
-            text: input
+            text: input,
+            isActive: props.isActive
         });
-        setInput('');   
+        setInput(''); 
+
+        // let data = {proj_name: 'trader joes', task_item:input, email:props.email, order_id: '1', isActive: props.isActive, assignee: props.email}
+        let data = {proj_name: 'trader joes', task_item:input, email:props.email, order_id: '1', isComplete: props.isComplete, assignee: props.email}
+        fetch('/projdet',{method: "POST",  body: JSON.stringify(data),  headers: {
+          'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => console.log(data));
+      
     };
     
 
@@ -41,17 +51,19 @@ function TodoForm(props) {
     )
 }
 
-function Todo({todos, completeTodo, removeTodo, updateTodo}) {
+function Todo({todos, completeTodo, removeTodo, updateTodo, email, isActive}) {
     const [edit, setEdit] = React.useState({
         id: null,
-        value: ''
+        value: '',
+        isActive: true
     });
 
     const submitUpdate = value => {
         updateTodo(edit.id, value)
         setEdit({
             id: null,
-            value: ''
+            value: '',
+            isActive: true
         })
     };
 
@@ -64,17 +76,20 @@ function Todo({todos, completeTodo, removeTodo, updateTodo}) {
         key={index}>
         <div key={todo.id} onClick={() => completeTodo(todo.id)}> 
          {todo.text}
+         {todo.isActive}
         </div>
         <div className='icons'>
             <i class="far fa-times-circle" onClick={() => removeTodo(todo.id)}></i>
-            <i class="fas fa-pen-square"onClick={() => setEdit({ id: todo.id, value: todo.text })}></i>
+            <i class="fas fa-pen-square"onClick={() => setEdit({ id: todo.id, value: todo.text, isActive: todo.isActive })}></i>
         </div>
         </div>
     ));
 };
-
-function TodoList() {
+// let order_id = 0
+function TodoList({email}) {
     const [todos, setTodos] = React.useState([]);
+    const [isActive, setIsActive] = React.useState(true); 
+    
     
     const addTodo = todo => {
         if (!todo.text || /^\s*$/.test(todo.text)) {
@@ -85,12 +100,14 @@ function TodoList() {
         const newTodo = [todo, ...todos];
         setTodos(newTodo);
         console.log(todo, ...todos);
+        // let order_id = order_id + 1
+        // setIsActive(true)  
     
     };
 
     const updateTodo = (todoId, newValue) => {
         if(!newValue.text || /^\s*$/.test(newValue.text)) {
-            return;
+            return todo;
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item )));
     };
@@ -98,24 +115,30 @@ function TodoList() {
     const removeTodo = id => {
         const removedArr = [...todos].filter(todo => todo.id !==id);
         setTodos(removedArr);
+        // isActive = 'f'
+        // setIsActive(false) 
     }
      
     const completeTodo = id => {
         let updatedTodos = todos.map(todo => {
           if (todo.id === id) {
             todo.isComplete = !todo.isComplete;
+            setIsActive(false) 
           }
           return todo;
         });
+        
         setTodos(updatedTodos);
+        
+        // isActive = 'f'
       };
 
 
     return(
         <div>
             <h1>what's the Plan for Today?</h1>
-            <TodoForm onSubmit={addTodo} />
-            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo}/>
+            <TodoForm onSubmit={addTodo}  email={email} isActive={isActive}/>
+            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} isActive={isActive}/>
         </div>
         
     );

@@ -220,7 +220,7 @@ const ModalImg = styled.img`
 //   z-index: 10;
 // `;
 
-const Modalt = ({ showModalt, setShowModalt }) => {
+const Modalt = ({ showModalt, setShowModalt, email, projectName }) => {
   const modaltRef = useRef();
 
   // const animation = useSpring({
@@ -259,7 +259,7 @@ const Modalt = ({ showModalt, setShowModalt }) => {
     <React.Fragment>
       {showModalt ? (
         <Backgrounda onClick={closeModalt} ref={modaltRef}>
-            <TodoList showModalt={showModalt}/>
+            <TodoList showModalt={showModalt} email={email} proj_name={projectName}/>
         </Backgrounda>
       ) : null}
     </React.Fragment>
@@ -267,7 +267,7 @@ const Modalt = ({ showModalt, setShowModalt }) => {
 };
 
 
-const Modal = ({ showModal, setShowModal }) => {
+const Modal = ({email, showModal, setShowModal }) => {
     const modalRef = useRef();
   
     // const animation = useSpring({
@@ -278,6 +278,34 @@ const Modal = ({ showModal, setShowModal }) => {
     //   transform: showModal ? `translateY(0%)` : `translateY(-100%)`
     // });
     const [showModalt, setShowModalt] = useState(false);
+    const [projectName, setProjectName] = React.useState('')
+    const [labelName, setLabelName] = React.useState('')
+    const [Fav, setFav] = React.useState(false)
+
+    function handleSubmit(evt){
+      evt.preventDefault()
+      console.log(projectName, labelName)
+      const due_date = '2020-11-16'
+      let data = {proj_name:projectName, label_name:labelName, due_date:due_date, email:email, favourite: Fav}
+      fetch('/projdet',{method: "POST",  body: JSON.stringify(data),  headers: {
+        'Content-Type': 'application/json'}} )
+      .then(response => response.json())
+      .then(data => console.log(data));
+    }
+
+    function handleProjectNameChange(evt){
+      setProjectName(evt.target.value)
+    }
+
+    function handleLabelChange(evt){
+      setLabelName(evt.target.value)
+    }
+
+    function handleFavChange(evt){
+      setFav(!Fav)
+      
+    }
+
   
     const openModalt = () => {
       setShowModalt(prev => !prev);
@@ -317,14 +345,15 @@ const Modal = ({ showModal, setShowModal }) => {
                 {/* <ModalContent> */}
                 {/* <FormWrap showModal={showModal}> */}
                 <FormContenta>
-                <Forma action="#">
+                <Forma >
                     <FormH1a> Add a new Project </FormH1a>
                     <FormLabela htmlFor='for'>Project Name</FormLabela>
-                    <FormInputa type='text' required />
+                    <FormInputa type='text' value={projectName} onChange={handleProjectNameChange} required />
                     <FormLabela htmlFor='for'>Label</FormLabela>
-                    <FormInputa type='text'  />
-                    <FormInputa type='checkbox' value='favourite' />
+                    <FormInputa type='text'  value={labelName} onChange={handleLabelChange} />
+                    <FormInputa type='checkbox' checked={Fav} onChange={handleFavChange} />
                     <FormLabela htmlFor='fav'>'Add to Favourites</FormLabela>
+                    <input type='date'></input>
                 </Forma>
                 </FormContenta>
             {/* </FormWrap> */}
@@ -333,21 +362,22 @@ const Modal = ({ showModal, setShowModal }) => {
                   aria-label='Close modal'
                   onClick={() => setShowModal(prev => !prev)} */}
                 {/* /> */}
-                <Calendar />
+                {/* <Calendar /> */}
                 <FormButtona type='submit' value='next' onClick={openModalt}> Next </FormButtona> 
+                {/* <FormButtona type='submit' value='next' onClick={handleSubmit}> Next </FormButtona> */}
                 <FormButtona type='submit' value='cancel'> Cancel </FormButtona>
               </ModalWrapper>
             {/* </animated.div> */}
           </Backgrounda>
         ) : null}
-        <Modalt showModalt={showModalt} setShowModalt={setShowModalt} /> 
+        <Modalt showModalt={showModalt} setShowModalt={setShowModalt} email={email} proj_name={projectName} /> 
       </React.Fragment>
     );
   };
       
 //  }
 
-function Addproj() {
+function Addproj({email}) {
 
   const [showModal, setShowModal] = useState(false);
   
@@ -364,7 +394,7 @@ function Addproj() {
       <React.Fragment>
           <Containera>
           <Button onClick={openModal}>New Project</Button>
-          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <Modal showModal={showModal} setShowModal={setShowModal} email={email}/>
           {/* <GlobalStyle /> */}
           </Containera>
       </React.Fragment>
