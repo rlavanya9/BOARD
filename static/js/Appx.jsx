@@ -37,6 +37,9 @@
                 <Route path='/home' >
                     <Navside email={email}/>
                 </Route>
+                <Route path='/about' >
+                    <AboutUs />
+                </Route>
                 <Route path='/projects'>
                     <Navside email={email}/>
                     {/* <ViewProject email={email}/> */}

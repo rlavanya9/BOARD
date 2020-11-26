@@ -59,8 +59,8 @@ const MenuItems = [
         cName: 'nav-links'
     },
     {
-        title: 'Features',
-        url: '#',
+        title: 'About Us',
+        url: '/about',
         cName: 'nav-links'
     },
     {
