@@ -9,8 +9,9 @@ app.secret_key = "dfsghj"
 app.jinja_env.undefined = StrictUndefined
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
-@app.route('/')
-def welcome_page():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def welcome_page(path):
     """Show the application's homepage."""
 
     return render_template('base.html')
@@ -102,6 +103,102 @@ def project_detail():
     
     return jsonify(email)
 
+@app.route('/allproj.json', methods=["POST"])
+# @app.route('/allproj.json')
+def all_project():
+    """view all projects"""
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']  
+    project_name = data['proj_name']
+    # email = 'test03@test.tst'
+    # project_name = 'trader joes'    
+    allproj = crud.display_all_project(email,project_name)
+    print(allproj)
+    proj_name = ''
+    allproj_dict = {}
+    for element in allproj:
+        proj_name = element[0]
+        task_dict = dict()
+        task_dict["id"] = element[1]
+        task_dict["text"] = element[2]
+        if proj_name in allproj_dict:
+            tasks = allproj_dict[proj_name]
+            tasks.append(task_dict)
+        else:
+            allproj_dict[proj_name] = [task_dict]
+    return jsonify([allproj_dict])
+
+@app.route('/eproj.json', methods=["POST"])
+def edit_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    proj_name = data['proj_name']
+    task_item = data['task_item']
+    edit = crud.edit_task(email, assignee, order_id, proj_name, task_item)
+    # print(edit)
+    return jsonify(email)
+
+@app.route('/rproj.json', methods=["POST"])
+def remove_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    proj_name = data['proj_name']
+    remove = crud.remove_task(email, assignee, order_id, proj_name)
+    return jsonify(email)
+
+@app.route('/cproj.json', methods=["POST"])
+def complete_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    is_Complete = data.get('isComplete')
+    if is_Complete == True:
+        is_active = False
+    else:
+        is_active = True
+    print('*********isComplete*******')
+    print(is_active)
+    proj_name = data['proj_name']
+    remove = crud.complete_task(email, assignee, order_id, proj_name, is_active)
+    return jsonify(email)
+
+@app.route('/cardproj.json', methods=["POST"])
+def card_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    allcards = crud.display_card_project(email)
+    print(allcards)
+    proj_name = ''
+    allcard_dict = {}
+    for element in allcards:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in allcard_dict:
+            allcard_dict[proj_name].append(task_item)
+        else:
+            allcard_dict[proj_name] = [task_item]
+    return jsonify([allcard_dict])
+
+
 @app.route('/tproj.json', methods=["POST"])
 def today_project():
     """view today's projects"""
@@ -121,52 +218,91 @@ def today_project():
         else:
             today_dict[proj_name] = [task_item]
     return jsonify([today_dict])
+   
+@app.route('/pastdue.json', methods=["POST"])
+def past_proj():
+    """view all the past due projects"""
 
-# @app.route('/pastdue')
-# def upcome_proj():
-#     """view all the upcoming projects"""
-
-#     upcoming = crud.past_due()
-#     return jsonify(upcoming)
-
-# @app.route('/favs')
-# def fav_tasks():
-
-#     favs = crud.display_favourite()
-#     return jsonify(favs)
-
-# @app.route('/uproj')
-# def upcome_proj():
-#     """view all the upcoming projects"""
-
-#     upcoming = crud.display_upcoming_project()
-#     return jsonify(upcoming)
-
-# @app.route('/favs')
-# def fav_tasks():
-
-#     favs = crud.display_favourite()
-#     return jsonify(favs)
-
-# @app.route('/dislabel',methods=["POST"])
-# def labl_tasks():
-#      """view label projects"""
+    data = request.get_json()
+    print(data)
     
-#     # data = request.get_json()
-#     # print(data)
-#     # email = data['email']
-#     label = crud.display_labels(email)
-#     print(today)
-#     # proj_name = ''
-#     # today_dict = {}
-#     # for element in today:
-#     #     proj_name = element[0]
-#     #     task_item = element[1]
-#     #     if proj_name in today_dict:
-#     #         today_dict[proj_name].append(task_item)
-#     #     else:
-#     #         today_dict[proj_name] = [task_item]
-#     return jsonify(label)
+    email = data['email']
+    past_proj = crud.past_due(email)
+    print(past_proj)
+    proj_name = ''
+    past_dict = {}
+    for element in past_proj:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in past_dict:
+            past_dict[proj_name].append(task_item)
+        else:
+            past_dict[proj_name] = [task_item]
+    return jsonify([past_dict])
+
+
+@app.route('/upproj.json', methods=["POST"])
+def upcome_proj():
+    """view all the upcoming projects"""
+
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    up_proj = crud.display_upcoming_project(email)
+    print(up_proj)
+    proj_name = ''
+    up_dict = {}
+    for element in up_proj:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in up_dict:
+            up_dict[proj_name].append(task_item)
+        else:
+            up_dict[proj_name] = [task_item]
+    return jsonify([up_dict])
+
+
+@app.route('/favs.json',methods=["POST"])
+def fav_tasks():
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    favs = crud.display_favourite(email)
+    print(favs)
+    proj_name = ''
+    fav_dict = {}
+    for element in favs:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in fav_dict:
+            fav_dict[proj_name].append(task_item)
+        else:
+            fav_dict[proj_name] = [task_item]
+    return jsonify([fav_dict])
+
+@app.route('/label.json',methods=["POST"])
+def labl_tasks():
+
+    """view label projects"""
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    label = crud.display_labels(email)
+    print(label)
+    proj_name = ''
+    label_dict = {}
+    for element in label:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in label_dict:
+            label_dict[proj_name].append(task_item)
+        else:
+            label_dict[proj_name] = [task_item]
+    return jsonify([label_dict])
+    
 
 # @app.route('/assignee')
 # def assign_tasks():

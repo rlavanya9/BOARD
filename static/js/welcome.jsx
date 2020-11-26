@@ -146,7 +146,7 @@ right: 0;
 top: 0;
 z-index: 0;
 overflow: hidden;
-background: linear-gradient(108deg, rgba(1, 147, 86, 1) 0%, rgba(10, 201, 122, 1) 100%);
+background: linear-gradient(108deg, rgb(1, 1, 1) 0%,rgba(0, 0, 0, 0.9) 100%);
 `;
 
 const FormWrap = styled.div`

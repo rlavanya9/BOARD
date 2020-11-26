@@ -90,8 +90,8 @@ transform: rotate(-3deg);
 `;
 
 
-function FavContainer() {
-    const [favProj, setFavProj] = React.useState([{}]);
+function PastContainer() {
+    const [pastProj, setPastProj] = React.useState([{}]);
     const [email, setEmail] = React.useState('')
     const emailFromStorage = JSON.parse(localStorage.getItem('email'));
 
@@ -99,15 +99,15 @@ function FavContainer() {
     React.useEffect(() => {
         console.log('*****useEffect is running******')
         let data ={email:emailFromStorage}
-        fetch('/favs.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        fetch('/pastdue.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
-        .then(data => setFavProj(data));
+        .then(data => setPastProj(data));
         // debugger
     },[])
 
-    const favcards = [];
-    for (const element of favProj){
+    const pastcards = [];
+    for (const element of pastProj){
         console.log('*******this is the list loop *******')
         console.log(element)
         for (const project in element){
@@ -118,7 +118,7 @@ function FavContainer() {
             const list = element[project]
             console.log(list)
             // debugger
-            favcards.push(
+            pastcards.push(
             // return (
             //     <div>
                     <Card>
@@ -142,14 +142,14 @@ function FavContainer() {
         }
     }
 
-    return <div>{favcards}</div>
+    return <div>{pastcards}</div>
 
 }
 
 
 
 
-function Favourites() {
+function PastDue() {
     return (
         <React.Fragment>
       <div style={{
@@ -158,7 +158,7 @@ function Favourites() {
           alignItems:"center",
           height:"100vh"
       }}>
-        <FavContainer />
+        <PastContainer />
       </div>
       </React.Fragment>
     );

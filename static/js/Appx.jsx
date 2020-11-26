@@ -41,6 +41,7 @@
                     <Navside email={email}/>
                     {/* <ViewProject email={email}/> */}
                     <Addproj email={email}/>
+                    {/* <TodoList /> */}
                 </Route>
                 <Route path='/allproj'>
                     <Navside email={email}/>
@@ -49,6 +50,10 @@
                 <Route path='/today'>
                     <Navside email={email}/>
                     <Today email={email}/>
+                </Route> 
+                <Route path='/pastdue' >
+                    <Navside email={email}/>
+                    <PastDue email={email}/>
                 </Route> 
                 <Route path='/upcoming' >
                     <Navside email={email}/>

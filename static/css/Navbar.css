@@ -130,7 +130,7 @@
 
     .nav-links-mobile:hover {
         background: #fff;
-        /* color: #6568F4; */
+        color: #6568F4;
         color: #04363f;
         transition: 250ms;
     }
@@ -138,4 +138,4 @@
     Button {
         display: none;
     }
-}
+} 

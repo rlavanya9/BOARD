@@ -24,12 +24,12 @@ function TodoForm(props) {
         });
         setInput(''); 
 
-        // let data = {proj_name: 'trader joes', task_item:input, email:props.email, order_id: '1', isActive: props.isActive, assignee: props.email}
-        let data = {proj_name: 'trader joes', task_item:input, email:props.email, order_id: '1', isComplete: props.isComplete, assignee: props.email}
-        fetch('/projdet',{method: "POST",  body: JSON.stringify(data),  headers: {
-          'Content-Type': 'application/json'}} )
-        .then(response => response.json())
-        .then(data => console.log(data));
+        // // let data = {proj_name: 'trader joes', task_item:input, email:props.email, order_id: '1', isActive: props.isActive, assignee: props.email}
+        // let data = {proj_name: projName, task_item:input, email:props.email, order_id: props.id, isComplete: props.isComplete, assignee: props.email, favourites: props.favs}
+        // fetch('/projdet',{method: "POST",  body: JSON.stringify(data),  headers: {
+        //   'Content-Type': 'application/json'}} )
+        // .then(response => response.json())
+        // .then(data => console.log(data));
       
     };
     
@@ -110,10 +110,22 @@ function TodoList({email}) {
             return todo;
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item )));
+        console.log('*****update todo is running******')
+        let data ={email:emailFromStorage, proj_name:'trader joes', task_item: newValue.text, assignee:emailFromStorage, order_id: todoId, isComplete: 't'}
+        fetch('/eproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+            'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => console.log(data))
     };
 
     const removeTodo = id => {
         const removedArr = [...todos].filter(todo => todo.id !==id);
+        console.log('*****remove todo is running******')
+        let data ={email:emailFromStorage, proj_name:'trader joes', assignee:emailFromStorage, order_id: id, isComplete: 't'}
+        fetch('/rproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+            'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => console.log(data))
         setTodos(removedArr);
         // isActive = 'f'
         // setIsActive(false) 
@@ -123,6 +135,12 @@ function TodoList({email}) {
         let updatedTodos = todos.map(todo => {
           if (todo.id === id) {
             todo.isComplete = !todo.isComplete;
+            console.log('*****complete todo is running******')
+            let data ={email:emailFromStorage, proj_name:'costco', assignee:emailFromStorage, order_id: id, isComplete: todo.isComplete}
+            fetch('/cproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+                'Content-Type': 'application/json'}} )
+            .then(response => response.json())
+            .then(data => console.log(data))
             setIsActive(false) 
           }
           return todo;

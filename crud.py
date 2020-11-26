@@ -60,11 +60,26 @@ def get_proj_id(project_name):
     # return Project.query(Project.project_id).filter_by(project_name=project_name).one()
     return db.session.query(Project.project_id).filter(Project.proj_name == project_name).one()
 
+def display_all_project(email,project_name):
+    
+    now = datetime.now()
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    return db.session.query(Project.proj_name, Task.task_id,Task.task_item).filter((Project.project_id == Task.project_id)&(Project.proj_name == project_name)&
+    (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+
+def display_card_project(email):
+    
+    now = datetime.now()
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
+    (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+
+
 def display_today_project(email):
     
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date <= now)&
+    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date == now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
     # return Project.query.filter(Project.due_date <= now).all()
 
@@ -94,8 +109,8 @@ def add_label(label_name, user_id, project_id):
 
 def display_labels(email):
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Label.label_name, Project.Task.task_item).filter((Label.user_id == user_id) & (Label.project_id == Project.project_id)&
-    (Project.project_id == Project.Task.project_id) & (Project.Task.is_active == 't')).all()
+    return db.session.query(Label.label_name, Task.task_item).filter((Label.user_id == user_id) & (Label.project_id == Project.project_id)&
+    (Project.project_id == Task.project_id) & (Task.is_active == 't')).all()
     # return Label.query.filter(Label.user_id==user_id).all()
 
 
@@ -108,9 +123,11 @@ def add_favourites(project_id, user_id):
 
     return favourite
 
-def display_favourite(user_id):
+def display_favourite(email):
 
-    return Favourite.query.filter_by(user_id=user_id).all()
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    return db.session.query(Project.proj_name, Task.task_item).filter((Favourite.project_id == Project.project_id) & (Favourite.user_id == user_id) &
+    (Project.user_id == user_id) & (Project.project_id == Task.project_id) & (Task.is_active == 't')).all()
 
 
 def add_task(task_item, project_id, is_active, order_id, assignee):
@@ -121,6 +138,36 @@ def add_task(task_item, project_id, is_active, order_id, assignee):
     db.session.commit()
 
     return task
+
+def edit_task(email, assignee, order_id, proj_name, task_item):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    etask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
+    etask.task_item = task_item
+    
+    db.session.commit()
+    
+def remove_task(email, assignee, order_id, proj_name):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    rtask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).one()
+    db.session.delete(rtask)    
+    db.session.commit()
+
+def complete_task(email, assignee, order_id, proj_name, is_active):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    ctask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
+    ctask.is_active = is_active
+    
+    db.session.commit()
+
 
 def display_tasks_by_proj_id(project_id):
 

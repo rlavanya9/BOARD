@@ -98,7 +98,7 @@ cursor: pointer;
 `;
 
 
-const Task = ({ showTask, setShowTask, email}) => {
+const Task = ({ showTask, setShowTask, email, projName}) => {
     const TaskRef = useRef();
 
     
@@ -133,7 +133,7 @@ const Task = ({ showTask, setShowTask, email}) => {
       <React.Fragment>
         {showTask ? (
           <Backgrounda onClick={closeTask} ref={TaskRef}>
-              <AllTodoList showTask={showTask} email={email} />
+              <AllTodoList showTask={showTask} email={email} projName={projName} />
           </Backgrounda>
         ) : null}
       </React.Fragment>
@@ -147,15 +147,23 @@ function AllProjContainer() {
     const [email, setEmail] = React.useState('')
     const emailFromStorage = JSON.parse(localStorage.getItem('email'));
     const [showTask, setShowTask] = React.useState(false);
+    const [projName, setProjName] = React.useState('')
 
-    const openTask = () => {
+    const openTask = (project) => {
         setShowTask(prev => !prev);
+        setProjName(project);
+
         };
         
+    // const handleSubmit = (evt) => {
+    //     // evt.preventDefault()
+    //     setProjName(evt.target.val);
+        
+    // }
     React.useEffect(() => {
         console.log('*****useEffect is running******')
         let data ={email:emailFromStorage}
-        fetch('/tproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        fetch('/cardproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
         .then(data => setAllProj(data));
@@ -192,7 +200,9 @@ function AllProjContainer() {
                                 </FeatureListItem>
                             ))
                             }
-                            <FormButton type="submit" value='alltask' onClick={openTask}>Edit items </FormButton>
+                            {/* <FormButton type="submit" onClick={openTask}>Edit items </FormButton> */}
+                            <FormButton type="submit" onClick={()=> openTask(project)}>Edit items </FormButton>
+                            {/* <FormButton type="submit" value={project} openTask={openTask} onClick={handleSubmit}>Edit items </FormButton> */}
                         </Content>
                     </Card>
                     
@@ -204,7 +214,7 @@ function AllProjContainer() {
 
     return <React.Fragment><div>{allprojcards}</div>
     {/* <FormButton type="submit" value='alltask' onClick={openTask}>Edit items </FormButton> */}
-    <Task showTask={showTask} setShowTask={setShowTask} email={email}/> 
+    <Task showTask={showTask} setShowTask={setShowTask} email={email} projName={projName}/> 
     </React.Fragment>
 }
 
@@ -275,10 +285,10 @@ function AllTodoForm(props) {
             onChange={handleChange} ref={inputRef}/>
             <button className='todo-button'>Update</button></React.Fragment>):
             (<React.Fragment>
-            <input type='text' placeholder='Add a todo' value={input}
+            <input type='text' placeholder={props.proj_name} value={input}
             name='text' className='todo-input'
             onChange={handleChange} ref={inputRef}/>
-            <button className='todo-button'>Add todo</button></React.Fragment>)}
+            <button className='todo-button'>Click me</button></React.Fragment>)}
         </form>
     )
 }
@@ -318,10 +328,11 @@ function AllTodo({todos, completeTodo, removeTodo, updateTodo, email, isActive})
     ));
 };
 
-function AllTodoList({email}) {
+function AllTodoList({email,projName}) {
     const [todos, setTodos] = React.useState([]);
     const [isActive, setIsActive] = React.useState(true); 
     const [allProj, setAllProj] = React.useState([{}]);
+    const [editProj, setEditProj] = React.useState([{}]);
     // const [email, setEmail] = React.useState('')
     const emailFromStorage = JSON.parse(localStorage.getItem('email'));
     
@@ -331,10 +342,12 @@ function AllTodoList({email}) {
         //   }
     
         //   React.useEffect(() => {
-        console.log('*****useEffect is running******')
-        let data ={email:emailFromStorage}
-        fetch('/tproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        console.log('*****addtodo is running******')
+        let data ={email:emailFromStorage,proj_name:projName}
+        console.log(projName)
+        fetch('/allproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
+        // fetch('/allproj.json')
         .then(response => response.json())
         .then(data => setAllProj(data));
             // debugger
@@ -351,26 +364,29 @@ function AllTodoList({email}) {
                 console.log(project)
                 console.log('******items todo loop ********')
                 // const list = Object.values(project)
-                const todos = element[project]
-                for (const titem of todos){
-                //     console.log('***********todo row***********')
-                //     console.log(titem)
-                //     setTodos(titem)
-                // }
+                for (const plist of element[project]){
+                // const todos = element[project]
+                // for (const titem of todos){
+                // //     console.log('***********todo row***********')
+                // //     console.log(titem)
+                // //     setTodos(titem)
+                // // }
                     console.log('***********todo row before***********')
-                    console.log(titem)
-                    const titemD = {
-                        id: Math.floor(Math.random() * 10000),
-                        text: titem,
-                    };
-                    newTodo.push(titemD)
+                    console.log(plist)
+                //     const titemD = {
+                //         id: Math.floor(Math.random() * 10000),
+                //         text: titem,
+                //     };
+                    newTodo.push(plist)
                 // const newTodo = [todo, ...todos];
                     // setTodos(newTodo);
                     // console.log('***********todo row***********')
                     // console.log(newTodo)
                 }
             }
-        }    
+        }
+            
+       
         // const newTodo = [todo, ...todos];
 
         setTodos(newTodo);
@@ -381,37 +397,32 @@ function AllTodoList({email}) {
        
                 
     };
-    // const addTodo = todo => {
-    //     if (!todo.text || /^\s*$/.test(todo.text)) {
-    //         return;
-    //       }
-    
-    //     console.log('***********todo row before***********')
-    //     console.log(todos)
-    //     const newTodo = [todo, ...todos];
-
-    //     console.log('*****************settodo************')
-    //     console.log(newTodo)
-    //     setTodos(newTodo);
-        
-    //     console.log('***********after set todo row***********')
-    //     console.log(todo, ...todos);
-
-    //     // let order_id = order_id + 1
-    //     // setIsActive(true)  
-    
-    // };
 
     const updateTodo = (todoId, newValue) => {
         if(!newValue.text || /^\s*$/.test(newValue.text)) {
             return todo;
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item )));
+        console.log('*****update todo is running******')
+        let data ={email:emailFromStorage, proj_name:projName, task_item: newValue.text, assignee:emailFromStorage, order_id: todoId, isComplete: 't'}
+        fetch('/eproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+            'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => console.log(data))
+        // .then(data => setEditProj(data));
+        window.location.reload();
     };
 
     const removeTodo = id => {
         const removedArr = [...todos].filter(todo => todo.id !==id);
+        console.log('*****remove todo is running******')
+        let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: 't'}
+        fetch('/rproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+            'Content-Type': 'application/json'}} )
+        .then(response => response.json())
+        .then(data => console.log(data))
         setTodos(removedArr);
+        window.location.reload();
   
     }
      
@@ -419,22 +430,28 @@ function AllTodoList({email}) {
         let updatedTodos = todos.map(todo => {
           if (todo.id === id) {
             todo.isComplete = !todo.isComplete;
+            console.log('*****complete todo is running******')
+            let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: todo.isComplete}
+            fetch('/cproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+                'Content-Type': 'application/json'}} )
+            .then(response => response.json())
+            .then(data => console.log(data))
             setIsActive(false) 
           }
           return todo;
         });
         
         setTodos(updatedTodos);
-        
+        window.location.reload();
       
       };
 
 
     return(
         <div>
-            <h1>what's the Plan for Today?</h1>
-            <AllTodoForm onSubmit={addTodo}  email={email} isActive={isActive}/>
-            <AllTodo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} isActive={isActive}/>
+            <h1>Modify items</h1>
+            <AllTodoForm onSubmit={addTodo}  email={email} isActive={isActive} proj_name={projName}/>
+            <AllTodo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} isActive={isActive} proj_name={projName}/>
         </div>
         
     );
