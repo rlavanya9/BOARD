@@ -282,7 +282,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item )));
         console.log('*****update todo is running******')
         let data ={email:emailFromStorage, proj_name:projName, task_item: newValue.text, assignee:emailFromStorage, order_id: todoId, isComplete: 't'}
-        fetch('/eproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        fetch('/enewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
         .then(data => console.log(data))
@@ -293,7 +293,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
         const removedArr = [...todos].filter(todo => todo.id !==id);
         console.log('*****remove todo is running******')
         let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: 't'}
-        fetch('/rproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        fetch('/rnewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
         .then(data => console.log(data))
@@ -307,7 +307,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
             todo.isComplete = !todo.isComplete;
             console.log('*****complete todo is running******')
             let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: todo.isComplete}
-            fetch('/cproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+            fetch('/cnewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
                 'Content-Type': 'application/json'}} )
             .then(response => response.json())
             .then(data => console.log(data))

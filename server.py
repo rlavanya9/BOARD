@@ -151,6 +151,21 @@ def edit_project():
     # print(edit)
     return jsonify(email)
 
+@app.route('/enewproj.json', methods=["POST"])
+def edit_new_project():
+    """view new projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    proj_name = data['proj_name']
+    task_item = data['task_item']
+    editnew = crud.edit_new_task(email, assignee, order_id, proj_name, task_item)
+    # print(edit)
+    return jsonify(email)
+
 @app.route('/rproj.json', methods=["POST"])
 def remove_project():
     """view today's projects"""
@@ -162,6 +177,19 @@ def remove_project():
     # is_Complete = data['is_Complete']
     proj_name = data['proj_name']
     remove = crud.remove_task(email, assignee, order_id, proj_name)
+    return jsonify(email)
+
+@app.route('/rnewproj.json', methods=["POST"])
+def remove_new_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    proj_name = data['proj_name']
+    removenew = crud.remove_new_task(email, assignee, order_id, proj_name)
     return jsonify(email)
 
 @app.route('/cproj.json', methods=["POST"])
@@ -181,7 +209,27 @@ def complete_project():
     print('*********isComplete*******')
     print(is_active)
     proj_name = data['proj_name']
-    remove = crud.complete_task(email, assignee, order_id, proj_name, is_active)
+    compl = crud.complete_task(email, assignee, order_id, proj_name, is_active)
+    return jsonify(email)
+
+@app.route('/cnewproj.json', methods=["POST"])
+def complete_new_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    email = data['email']
+    assignee = data['assignee']
+    order_id = data['order_id']
+    # is_Complete = data['is_Complete']
+    is_Complete = data.get('isComplete')
+    if is_Complete == True:
+        is_active = False
+    else:
+        is_active = True
+    print('*********isComplete*******')
+    print(is_active)
+    proj_name = data['proj_name']
+    complnew = crud.complete_new_task(email, assignee, order_id, proj_name, is_active)
     return jsonify(email)
 
 @app.route('/cardproj.json', methods=["POST"])

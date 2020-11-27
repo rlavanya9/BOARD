@@ -149,6 +149,17 @@ def edit_task(email, assignee, order_id, proj_name, task_item):
     etask.task_item = task_item
     
     db.session.commit()
+
+def edit_new_task(email, assignee, order_id, proj_name, task_item):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    # tsk_id = db.session.query(Task.task_id).filter((Task.task_item == task_item)&(Project.proj_name == proj_name)).first()
+    entask = Task.query.filter((Task.order_id == order_id) & (Task.project_id == proj_id)).first()
+    entask.task_item = task_item
+    
+    db.session.commit()
     
 def remove_task(email, assignee, order_id, proj_name):
 
@@ -159,6 +170,15 @@ def remove_task(email, assignee, order_id, proj_name):
     db.session.delete(rtask)    
     db.session.commit()
 
+def remove_new_task(email, assignee, order_id, proj_name):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    rntask = Task.query.filter((Task.order_id == order_id) & (Task.project_id == proj_id)).one()
+    db.session.delete(rntask)    
+    db.session.commit()
+
 def complete_task(email, assignee, order_id, proj_name, is_active):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
@@ -166,6 +186,16 @@ def complete_task(email, assignee, order_id, proj_name, is_active):
     # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
     ctask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
     ctask.is_active = is_active
+    
+    db.session.commit()
+
+def complete_new_task(email, assignee, order_id, proj_name, is_active):
+
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    cntask = Task.query.filter((Task.order_id == order_id) & (Task.project_id == proj_id)).first()
+    cntask.is_active = is_active
     
     db.session.commit()
 
