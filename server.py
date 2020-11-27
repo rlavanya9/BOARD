@@ -47,8 +47,8 @@ def login_user():
     
     email = data['email']
     password = data['password']
-    print(crud.check_user(email))
-    print(crud.validate_user(email, password))
+    # print(crud.check_user(email))
+    # print(crud.validate_user(email, password))
     if crud.check_user(email):
         
         is_valid = crud.validate_user(email, password)
@@ -70,10 +70,10 @@ def project_detail():
     print(data)
     # add details to project table
     pname = data['proj_name']
-    # due_date = data['due_date']
-    # lname = data['label_name']
+    due_date = data['due_date']
+    lname = data['label_name']
     email = data['email']
-    # fav = data['favourite']
+    fav = data['favourite']
     is_Complete = data.get('isComplete')
     if is_Complete == True:
         is_active = False
@@ -84,23 +84,29 @@ def project_detail():
     assignee = data['assignee']
     items = data['task_item']
 
-    # add details to project table
-    # user_id = crud.get_user_id(email)
-    # new_proj = crud.add_project(pname,due_date,user_id)
-
+    proj_exists = crud.display_project(pname)
+    print(proj_exists)
     
+    if proj_exists:
+        # add details to task table
+        proj_id = crud.get_proj_id(pname)
+        new_tasks = crud.add_task(items, proj_id, is_active, order_id, assignee)
+    else:    
+        # add details to project table
+        user_id = crud.get_user_id(email)
+        new_proj = crud.add_project(pname,due_date,user_id)
+            
+        # add details to label table
+        proj_id = crud.get_proj_id(pname)
+        new_label = crud.add_label(lname, user_id, proj_id)
 
-    # add details to label table
-    proj_id = crud.get_proj_id(pname)
-    # new_label = crud.add_label(lname, user_id, proj_id)
+        # add details to favourites table
+        if fav == True:
+            new_fav = crud.add_favourites(proj_id, user_id)
 
-    # add details to task table
-    new_tasks = crud.add_task(items, proj_id, is_active, order_id, assignee)
+        # add details to task table
+        new_tasks = crud.add_task(items, proj_id, is_active, order_id, assignee)
 
-    # add details to favourites table
-    # if fav == True:
-    #     new_fav = crud.add_favourites(proj_id, user_id)
-    
     return jsonify(email)
 
 @app.route('/allproj.json', methods=["POST"])

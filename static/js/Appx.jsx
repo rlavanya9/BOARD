@@ -20,7 +20,7 @@
 
     }
 
-    const [email, setEmail] = useState(getEmail);
+    const [email, setEmail] = React.useState(getEmail);
     console.log(email)
 
     return (
@@ -43,8 +43,9 @@
                 <Route path='/projects'>
                     <Navside email={email}/>
                     {/* <ViewProject email={email}/> */}
-                    <Addproj email={email}/>
+                    {/* <Addproj email={email}/> */}
                     {/* <TodoList /> */}
+                    <NewProj email={email}/>
                 </Route>
                 <Route path='/allproj'>
                     <Navside email={email}/>

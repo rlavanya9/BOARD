@@ -53,7 +53,7 @@ def add_project(proj_name, due_date, user_id):
 
 def display_project(project_name):
 
-    return Project.query.filter_by(project_name=project_name).one()
+    return db.session.query(Project.project_id).filter(Project.proj_name==project_name).first()
 
 def get_proj_id(project_name):
 
@@ -144,6 +144,7 @@ def edit_task(email, assignee, order_id, proj_name, task_item):
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
     # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
+    # tsk_id = db.session.query(Task.task_id).filter((Task.task_item == task_item)&(Project.proj_name == proj_name)).first()
     etask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
     etask.task_item = task_item
     
