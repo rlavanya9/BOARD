@@ -38,7 +38,12 @@
                     <Navside email={email}/>
                 </Route>
                 <Route path='/about' >
+                    <Navbar />
                     <AboutUs />
+                </Route>
+                <Route path='/contact' >
+                    <Navbar />
+                    <Contact />
                 </Route>
                 <Route path='/projects'>
                     <Navside email={email}/>

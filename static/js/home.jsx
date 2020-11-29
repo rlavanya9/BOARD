@@ -59,7 +59,7 @@ const Menuside = [
     },
     {
         title: 'Logout',
-        url: '#',
+        url: '/',
         cName: 'nav-links'
     },
   
