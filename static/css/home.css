@@ -5,16 +5,46 @@
     align-items: center;
     list-style: none;
 }
+.NavbarItems {
+    /* background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73,63,252,1) 100%); */
+    /* background: linear-gradient(90deg, rgb(28, 95, 196) 0%, rgb(252, 63, 63) 100%); */
+    /* background: linear-gradient(90deg, rgb(0, 0, 0) 0%, 100%); */
+    background: linear-gradient(
+        90deg,
+        rgb(39, 176, 255) 0%,
+        rgb(0, 232, 236) 100%
+      );
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
 
 .menu-bars {
-    margin-left: 2 rem;
-    font-size: 2 rem;
+    margin-left: 2rem;
+    font-size: 2rem;
     background: none;
     
 }
-
+.nav-links-home {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+a.nav-links-home {
+    margin-left: 500px;
+}
+.nav-links-home a:hover { 
+    /* background-color: #1a83ff; */
+    background-color: #010101;
+}
 .nav-menu-home {
-    background-color: #060b26;
+    background: linear-gradient(
+        90deg,
+        rgb(39, 176, 255) 0%,
+        rgb(0, 232, 236) 100%
+      );
     width: 250px;
     height: 100vh;
     display: flex;
@@ -24,6 +54,7 @@
     left: -100%;
     transition: 850ms;
 } 
+
 
 .nav-menu-home.active {
     left: 0;
@@ -41,7 +72,8 @@
 
 .nav-text a{
     text-decoration: none;
-    color: #b61212;
+    /* color: #b61212; */
+    color: #ffffff;
     font-size: 18px;
     width: 95%;
     height: 100%;
@@ -52,7 +84,8 @@
 } 
 
 .nav-text a:hover { 
-    background-color: #1a83ff;
+    /* background-color: #1a83ff; */
+    background-color: #010101;
 }
 
 .nav-menu-items {
@@ -60,18 +93,39 @@
 } 
 
 .navbar-toggle {
-    background-color:  #060b26;
+    /* background-color:  #060b26; */
+    background: linear-gradient(
+        90deg,
+        rgb(39, 176, 255) 0%,
+        rgb(0, 232, 236) 100%
+      );
     width: 100%;
     height: 80px;
     display: flex;
     justify-content: start;
     align-items: center;
+    margin-top: 10%;
 } 
 
 span{
     margin-left: 16px;
 } 
 
+.fa-bars {
+    color: #fff;
+    font-size: 2rem;
+    margin-right: 2rem;
+}
+i.fas.fa-bars {
+margin-left: -9%;
+}
+
+.fa-times {
+    color: #fff;
+    /* font-size: 2rem; */
+    font-size: 2rem;
+    margin-left: 800%;
+}
 
 .Today,
 .Upcoming,

@@ -25,16 +25,18 @@ def register_user():
 
     email = data['email']
     password = data['password']
+    confirmpswd = data['confirmpswd']
+    if ((email != '') and (password != '') and (confirmpswd == password)) :
+        existing_user = crud.check_user(email)
 
-    existing_user = crud.check_user(email)
 
-
-    if existing_user:
-        return jsonify("Email already in use, cannot create account.")
+        if existing_user:
+            return jsonify("Email already in use, cannot create account.")
+        else:
+            new_user = crud.add_user(email,password)
+            return jsonify("Account created! please log in")
     else:
-        new_user = crud.add_user(email,password)
-        return jsonify("Account created! please log in")
-
+        return jsonify("Enter valid email and password")
 
 
 @app.route('/login', methods=["POST"])

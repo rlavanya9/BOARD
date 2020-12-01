@@ -73,7 +73,7 @@ const useForm = (callback, validate) => {
     
       setErrors(validate(values));
       setIsSubmitting(true);
-      let data = {email:values.email, password:values.password}
+      let data = {email:values.email, password:values.password, confirmpswd:values.password2}
       fetch('/signup',{method: "POST",  body: JSON.stringify(data),  headers: {
         'Content-Type': 'application/json'}} )
       .then(response => response.json())
@@ -181,7 +181,7 @@ const FormSignup = ({ submitForm }) => {
     return (
       <div className='form-content-right'>
         <h1 className='form-success'>Account Created</h1>
-        <button className='form-input-btn'><Link to='/'>Login now </Link></button>
+        <Link to='/'><button className='form-input-btn'>Login now </button></Link>
         <img className='form-img-4' src='/static/img/img-4.svg' alt='success-image' />
         
       </div>

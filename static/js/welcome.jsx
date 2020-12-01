@@ -53,11 +53,11 @@ const styled = window.styled;
 
 
 const MenuItems = [
-    {
-        title: 'Home',
-        url: '/home',
-        cName: 'nav-links'
-    },
+    // {
+    //     title: 'Home',
+    //     url: '/home',
+    //     cName: 'nav-links'
+    // },
     {
         title: 'About Us',
         url: '/about',
@@ -71,6 +71,7 @@ const MenuItems = [
     {
         title: 'Sign Up',
         url: '/signup',
+        // cName: 'nav-links'
         cName: 'nav-links-mobile'
     },
   
@@ -115,7 +116,8 @@ const MenuItems = [
   
     return(
         <nav className="NavbarItems">
-            <h1 className="navbar-logo">TODO<i className="fab fa-react"></i></h1>
+            {/* <h1 className="navbar-logo">TODO<i className="fab fa-react"></i></h1> */}
+            <h1 className="navbar-logo">TODO<Link to='/'><i className="fas fa-elephant"></i></Link></h1>
             <div className="menu-icon" onClick={handleClick}>
                 <i className={clicked? 'fas fa-times' : 'fas fa-bars'}></i>
             </div>
@@ -131,7 +133,7 @@ const MenuItems = [
                     )
                 })}
             </ul>
-            <Button> <Link to='/signup'>Sign Up</Link> </Button>
+            <Link to='/signup'><Button> Sign Up</Button></Link>
         </nav>
     )
   };
@@ -151,6 +153,7 @@ background: linear-gradient(108deg, rgb(1, 1, 1) 0%,rgba(0, 0, 0, 0.9) 100%);
 
 const FormWrap = styled.div`
 height: 100%;
+// height: auto;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -177,6 +180,7 @@ font-size: 32px;
 
 const FormContent = styled.div`
 height: 100%;
+// height: auto;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -187,14 +191,26 @@ justify-content: center;
 `;
 
 const Form = styled.form`
-background: #010101;
+// background: #010101;
+// background: #007acc;
+background: linear-gradient(
+    90deg,
+    rgb(39, 176, 255) 0%,
+    rgb(0, 232, 236) 100%
+  );
 max-width: 400px;
-height: auto;
+// height: auto;
+height: 100%;
 width: 100%;
 z-index: 1;
 display: grid;
-margin: 0 auto;
-padding: 80px 32px;
+// margin: 0 auto;
+margin-top: 10%;
+margin-left: auto;
+margin-bottom: auto;
+margin-right: auto;
+// padding: 80px 32px;
+padding: 45px 32px;
 border-radius: 4px;
 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 
@@ -225,7 +241,8 @@ border-radius: 4px;
 `;
 
 const FormButton = styled.button`
-background: #01bf71;
+// background: #01bf71;
+background: #010101;
 padding: 16px 0;
 border: None;
 border-radius: 4px;

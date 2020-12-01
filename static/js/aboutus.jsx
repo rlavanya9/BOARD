@@ -9,11 +9,11 @@ function AboutUs(){
                 Focus your energy on the right things
             </p>
             <div className='hero-btns'>
-                <Button
+            <Link to='/'><Button
                 className='btns'
                 buttonStyle='btn--outline'
                 buttonSize='btn--large'
-                > <Link to='/'>GET STARTED</Link> </Button>
+                > GET STARTED </Button></Link>
             </div>
         </div>
     );

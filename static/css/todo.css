@@ -8,11 +8,16 @@
   
 
   body {
-    background: linear-gradient(
+    /* background: linear-gradient(
       90deg,
       rgb(44, 32, 201) 0%,
       rgba(100, 115, 255, 1) 100%
-    );
+    ); */
+    background: linear-gradient(
+      90deg,
+      rgb(0, 0, 0) 0%,
+      rgb(0, 0, 0) 100%
+    ); 
   }
   .todo-app {
     display: flex;

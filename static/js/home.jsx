@@ -45,22 +45,17 @@ const Menuside = [
     {
         title: 'Home',
         url: '/home',
-        cName: 'nav-links'
+        cName: 'nav-links-home'
     },
-    // {
-    //     title: 'Features',
-    //     url: '#',
-    //     cName: 'nav-links'
-    // },
     {
         title: 'Contact Us',
-        url: '#',
-        cName: 'nav-links'
+        url: '/contact',
+        cName: 'nav-links-home'
     },
     {
         title: 'Logout',
         url: '/',
-        cName: 'nav-links'
+        cName: 'nav-links-home'
     },
   
   ]
