@@ -33,10 +33,34 @@
     padding: 0.5rem 1rem;
 }
 a.nav-links-home {
-    margin-left: 500px;
+    margin-left: auto;
 }
-.nav-links-home a:hover { 
+.nav-links-home:hover { 
     /* background-color: #1a83ff; */
+    background-color: #010101;
+}
+
+.nav-links-contact {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+a.nav-links-contact {
+    margin-left: 1990px;
+}
+.nav-links-contact:hover { 
+    background-color: #010101;
+}
+
+.nav-links-logout {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+a.nav-links-logout {
+    margin-left: 50px;
+}
+.nav-links-logout:hover { 
     background-color: #010101;
 }
 .nav-menu-home {

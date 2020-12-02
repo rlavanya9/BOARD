@@ -18,6 +18,12 @@ ${(gradient())};
 box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.025),
 0 9px 46px 8px rgba(0, 0, 0, 0.025),
 0 11px 15px -7px rgba(0, 0, 0, 0.25);
+// box-shadow: 0 24px 38px 3px rgba(255, 118, 20, 1),
+// 0 9px 46px 8px rgba(255, 84, 17, 1),
+// 0 11px 15px -7px rgba(255, 84, 17, 1);
+// display: inline-block;
+// margin-left: 5rem;
+// margin-bottom: auto;
 
 &::after {
     content: "";
@@ -46,7 +52,7 @@ justify-content: center;
 
 
 
-const Icon = styled.div`
+const CIcon = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
@@ -62,12 +68,21 @@ box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.25);
 `;
 
 const ProjectTitle = styled.div`
+margin-left: 10px;
 font-size: 1.25rem;
+font-weight: bold;
+align-items: center;
+justify-content: center;
 `;
+
 const FeatureListItem = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    // align-items: center;
+    // justify-content: center;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 20px;
     margin-bottom: 0.325rem;
 
     &  > i {
@@ -87,7 +102,7 @@ background: rgba(255, 255, 255, 0.1);
 transform: rotate(-3deg);
 `;
 
-const FormButton = styled.button`
+const EFormButton = styled.button`
 background: #01bf71;
 padding: 16px 0;
 border: None;
@@ -95,6 +110,7 @@ border-radius: 4px;
 color: #fff;
 font-size: 20px;
 cursor: pointer;
+justify-content: center
 `;
 
 
@@ -190,19 +206,20 @@ function AllProjContainer() {
                     <Card>
                         <BackgroundSquare />
                         <Content>
-                            <Icon className="fas fa-tasks"/>
+                            <CIcon className="fas fa-tasks" >
                             <ProjectTitle>{project}</ProjectTitle>
+                            </CIcon>
                             {
                             list.map(item => (
                                 <FeatureListItem>
-                                    <i class="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                     <span>{item}</span>
                                 </FeatureListItem>
                             ))
                             }
-                            {/* <FormButton type="submit" onClick={openTask}>Edit items </FormButton> */}
-                            <FormButton type="submit" onClick={()=> openTask(project)}>Edit items </FormButton>
-                            {/* <FormButton type="submit" value={project} openTask={openTask} onClick={handleSubmit}>Edit items </FormButton> */}
+                            {/* <EFormButton type="submit" onClick={openTask}>Edit items </EFormButton> */}
+                            <EFormButton type="submit" onClick={()=> openTask(project)}>Edit items </EFormButton>
+                            {/* <EFormButton type="submit" value={project} openTask={openTask} onClick={handleSubmit}>Edit items </EFormButton> */}
                         </Content>
                     </Card>
                     
@@ -212,8 +229,8 @@ function AllProjContainer() {
         }
     }
 
-    return <React.Fragment><div>{allprojcards}</div>
-    {/* <FormButton type="submit" value='alltask' onClick={openTask}>Edit items </FormButton> */}
+    return <React.Fragment>{allprojcards}
+    {/* <EFormButton type="submit" value='alltask' onClick={openTask}>Edit items </EFormButton> */}
     <Task showTask={showTask} setShowTask={setShowTask} email={email} projName={projName}/> 
     </React.Fragment>
 }
@@ -224,16 +241,20 @@ function AllProjContainer() {
 function AllProj() {
 
     return (
-        <React.Fragment>
+        // <React.Fragment>
       <div style={{
+          marginTop: "2%",
+          marginLeft: "10%",
           display: "flex",
-          justifycontent:"center",
-          alignItems:"center",
-          height:"100vh"
+          justifycontent:"flex-start",
+          alignItems:"flex-start",
+        //   height:"100vh",
+          height:"50vh",
+          flexWrap:"wrap"
       }}>
         <AllProjContainer />
       </div>
-      </React.Fragment>
+    //   </React.Fragment>
     );
 }
 

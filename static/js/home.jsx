@@ -50,12 +50,12 @@ const Menuside = [
     {
         title: 'Contact Us',
         url: '/contact',
-        cName: 'nav-links-home'
+        cName: 'nav-links-contact'
     },
     {
         title: 'Logout',
         url: '/',
-        cName: 'nav-links-home'
+        cName: 'nav-links-logout'
     },
   
   ]

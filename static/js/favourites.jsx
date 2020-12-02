@@ -20,6 +20,13 @@ ${(gradient())};
 box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.025),
 0 9px 46px 8px rgba(0, 0, 0, 0.025),
 0 11px 15px -7px rgba(0, 0, 0, 0.25);
+// box-shadow: 0 24px 38px 3px rgba(255, 118, 20, 1),
+// 0 9px 46px 8px rgba(255, 84, 17, 1),
+// 0 11px 15px -7px rgba(255, 84, 17, 1);
+// display: inline-block;
+// margin-left: 5rem;
+// margin-bottom: auto;
+
 
 &::after {
     content: "";
@@ -46,9 +53,7 @@ align-items: center;
 justify-content: center;
 `;
 
-
-
-const Icon = styled.div`
+const CIcon = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
@@ -64,12 +69,21 @@ box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.25);
 `;
 
 const ProjectTitle = styled.div`
+margin-left: 10px;
 font-size: 1.25rem;
+font-weight: bold;
+align-items: center;
+justify-content: center;
 `;
+
 const FeatureListItem = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
+    // align-items: center;
+    // justify-content: center;
+    width: 100%;
+    margin-left: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
     margin-bottom: 0.325rem;
 
     &  > i {
@@ -124,12 +138,13 @@ function FavContainer() {
                     <Card>
                         <BackgroundSquare />
                         <Content>
-                            <Icon className="fas fa-tasks"/>
+                            <CIcon className="fas fa-tasks" >
                             <ProjectTitle>{project}</ProjectTitle>
+                            </CIcon>
                             {
                             list.map(item => (
                                 <FeatureListItem>
-                                    <i class="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                     <span>{item}</span>
                                 </FeatureListItem>
                             ))
@@ -142,7 +157,7 @@ function FavContainer() {
         }
     }
 
-    return <div>{favcards}</div>
+    return (<React.Fragment> {favcards} </React.Fragment>);
 
 }
 
@@ -151,15 +166,19 @@ function FavContainer() {
 
 function Favourites() {
     return (
-        <React.Fragment>
+        // <React.Fragment>
       <div style={{
+          marginTop: "2%",
+          marginLeft: "10%",
           display: "flex",
-          justifycontent:"center",
-          alignItems:"center",
-          height:"100vh"
+          justifycontent:"flex-start",
+          alignItems:"flex-start",
+        //   height:"100vh",
+          height:"40vh",
+          flexWrap:"wrap"
       }}>
         <FavContainer />
       </div>
-      </React.Fragment>
+    //   </React.Fragment>
     );
 }

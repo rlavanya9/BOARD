@@ -27,9 +27,11 @@ z-index: -1;
 
 .hero-container > p {
     color: #fff;
+    /* color: #A9A9A9 */
     margin-top: 8px;
     font-size: 32px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
 }
 
 .hero-btns {
