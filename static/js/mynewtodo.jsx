@@ -9,27 +9,85 @@ font-weight: 400;
 text-align: center;
 `;
 
-const FormLabel = styled.label`
+const FormLabelN = styled.label`
+margin-top: 5rem;
 margin-bottom: 8px;
-font-size: 14px;
+padding-left: 50px; 
+font-size: 20px;
 color: #fff;
 `;
 
-const FormInput = styled.input`
+const FormLabelD = styled.label`
+margin-top: 5rem;
+// margin-bottom: 8px;
+padding-left: 50px;
+margin-right: 16px; 
+font-size: 20px;
+color: #fff;
+`;
+
+const FormLabelC = styled.label`
+margin-top: 5rem;
+margin-bottom: 8px;
+padding-left: 16px; 
+font-size: 20px;
+color: #fff;
+`;
+
+const FormInputD = styled.input`
+margin-top: 5rem;
 padding: 16px 16px;
 margin-bottom: 32px;
+margin-left:16px;
 border: none;
 border-radius: 4px;
+border: 2px solid #149fff;
 `;
-const FormButton = styled.button`
+
+const FormInputN = styled.input`
+margin-top: 5rem;
+padding: 16px 16px;
+// margin-bottom: 32px;
+margin-left:16px;
+border: none;
+border-radius: 4px;
+border: 2px solid #149fff;
+`;
+
+const FormInputC = styled.input`
+margin-top: 5rem;
+padding: 16px 16px;
+// margin-bottom: 32px;
+margin-left: 32px;
+border: none;
+border-radius: 10px;
+zoom:2;
+border: 2px solid #149fff;
+// width: 25px; 
+// height: 25px;
+`;
+
+const FormButtonN = styled.button`
+margin-top: 5rem;
+margin-left: 50px;
 background: #01bf71;
 padding: 16px 0;
 border: None;
-border-radius: 4px;
+border-radius: 10px;
 color: #fff;
 font-size: 20px;
 cursor: pointer;
 `;
+const Backgroundb = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+`;
+
 const Backgrounda = styled.div`
   width: 100%;
   height: 100%;
@@ -79,9 +137,9 @@ const NewTask = ({ showTask, setShowTask, email, projName, labelName, emailFromS
     return (
       <React.Fragment>
         {showTask ? (
-          <Backgrounda onClick={closeTask} ref={TaskRef}>
+          <Backgroundb onClick={closeTask} ref={TaskRef}>
               <NewTodoList showTask={showTask} email={email} projName={projName} labelName={labelName} dueDate={dueDate} fav={fav} />
-          </Backgrounda>
+          </Backgroundb>
         ) : null}
       </React.Fragment>
     );
@@ -97,7 +155,8 @@ function NewProjContainer() {
     const [projName, setProjName] = React.useState('')
     const [labelName, setLabelName] = React.useState('')
     const [fav, setFav] = React.useState(false)
-    const [dueDate, setDueDate] = React.useState('2020-11-23')
+    const [dueDate, setDueDate] = React.useState('2020-12-09')
+    const history = useHistory()
   
 
     const openTask = (project) => {
@@ -124,22 +183,31 @@ function NewProjContainer() {
     let dueDate = document.querySelector('input[type="date"]');
     setDueDate(dueDate.value) 
     }
-          
+    
+    function handleSubmit(evt){
+      history.push('/home')
+    }
     
     return <React.Fragment>
-        <div>
-        <FormLabel htmlFor='for'>Project Name</FormLabel>
-        <FormInput type='text' value={projName} onChange={handleProjectNameChange} required />
-        <FormLabel htmlFor='for'>Label</FormLabel>
-        <FormInput type='text'  value={labelName} onChange={handleLabelChange} />
-        <FormInput type='checkbox' checked={fav} onChange={handleFavChange} />
-        <FormLabel htmlFor='fav'>'Add to Favourites</FormLabel>
-        <label for='due_date'>Due Date</label>
-        <input type='date' id='due_date' value={dueDate} min='2020-11-23' onChange={handleDateChange}></input>
-        <FormButton type="submit" onClick={()=> openTask(projName,labelName,fav,dueDate)}>Add items </FormButton>
+        <div style={{
+          marginLeft: "15%"
+        }}>
+        <FormLabelN htmlFor='for'>Project Name</FormLabelN>
+        <FormInputN type='text' value={projName} onChange={handleProjectNameChange} required />
+        <FormLabelN htmlFor='for'>Label</FormLabelN>
+        <FormInputN type='text'  value={labelName} onChange={handleLabelChange} />
+        <FormInputC type='checkbox' checked={fav} onChange={handleFavChange} />
+        <FormLabelC htmlFor='fav'>Add to Favourites</FormLabelC>
+        <FormLabelD htmlFor='due_date'>Due Date</FormLabelD>
+        <FormInputD type='date' id='due_date' value={dueDate} min='2020-12-09' onChange={handleDateChange}></FormInputD>
+        <FormLabelN htmlFor='for'>Assignee</FormLabelN>
+        <FormInputN type='text' />
+        <FormButtonN type="submit" onClick={()=> openTask(projName,labelName,fav,dueDate)}>Add items </FormButtonN>
+        <FormButtonN type="submit" onClick={handleSubmit}>Done, Take me Home</FormButtonN>
         </div>
     {/* <FormButton type="submit" value='alltask' onClick={openTask}>Edit items </FormButton> */}
     <NewTask showTask={showTask} setShowTask={setShowTask} email={email} projName={projName} labelName={labelName} fav={fav} dueDate={dueDate} /> 
+    
     </React.Fragment>
 }
 

@@ -104,7 +104,9 @@ transform: rotate(-3deg);
 
 const EFormButton = styled.button`
 background: #01bf71;
-padding: 16px 0;
+// padding: 16px 0;
+margin-top: 1rem;
+padding: 10px 24px;
 border: None;
 border-radius: 4px;
 color: #fff;
@@ -218,7 +220,7 @@ function AllProjContainer() {
                             ))
                             }
                             {/* <EFormButton type="submit" onClick={openTask}>Edit items </EFormButton> */}
-                            <EFormButton type="submit" onClick={()=> openTask(project)}>Edit items </EFormButton>
+                            <EFormButton type="submit" onClick={()=> openTask(project)}>Edit</EFormButton>
                             {/* <EFormButton type="submit" value={project} openTask={openTask} onClick={handleSubmit}>Edit items </EFormButton> */}
                         </Content>
                     </Card>
@@ -309,7 +311,7 @@ function AllTodoForm(props) {
             <input type='text' placeholder={props.proj_name} value={input}
             name='text' className='todo-input'
             onChange={handleChange} ref={inputRef}/>
-            <button className='todo-button'>Click me</button></React.Fragment>)}
+            <button className='todo-button'>Show Tasks</button></React.Fragment>)}
         </form>
     )
 }

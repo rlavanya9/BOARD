@@ -1,10 +1,10 @@
 function Contact(){
     return(
-        <div>
-            <h1>
-                For partnership and business development inquiries, 
-                please contact us at mytodo@work.com.
-            </h1>
+        <div className='contact'>
+            <p>
+                please contact @ https://www.linkedin.com/in/lavanya-rangaswamy.
+            </p>
+            <img src="/static/img/contact.jpeg" className="contactcent"></img>
         </div>
     );
 }

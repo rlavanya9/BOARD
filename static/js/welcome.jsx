@@ -117,7 +117,8 @@ const MenuItems = [
     return(
         <nav className="NavbarItems">
             {/* <h1 className="navbar-logo">TODO<i className="fab fa-react"></i></h1> */}
-            <h1 className="navbar-logo">TODO<Link to='/'><i className="fas fa-elephant"></i></Link></h1>
+            {/* <h1 className="navbar-logo">TODO<Link to='/'><i className="fas fa-elephant"></i></Link></h1> */}
+            <h1 className="navbar-logo">BOARD<Link to='/'><i class="fas fa-sticky-note"></i></Link></h1>
             <div className="menu-icon" onClick={handleClick}>
                 <i className={clicked? 'fas fa-times' : 'fas fa-bars'}></i>
             </div>

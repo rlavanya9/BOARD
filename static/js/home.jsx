@@ -6,7 +6,7 @@ const SidebarData = [
     },
     
     {
-        title: 'All Projects',
+        title: 'Edit Projects',
         path: '/allproj',
         cName: 'nav-text'
     },
