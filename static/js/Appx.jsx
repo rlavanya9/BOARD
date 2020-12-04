@@ -77,6 +77,10 @@
                     <Navside email={email}/>
                     <Label email={email}/>
                 </Route>
+                <Route path='/shared'> 
+                    <Navside email={email}/>
+                    <Shared email={email}/>
+                </Route>
             </Switch> 
           </Router>
       </div>

@@ -64,38 +64,114 @@ def display_all_project(email,project_name):
     
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_id,Task.task_item).filter((Project.project_id == Task.project_id)&(Project.proj_name == project_name)&
+    user_all = db.session.query(Project.proj_name, Task.task_id,Task.task_item).filter((Project.project_id == Task.project_id)&(Project.proj_name == project_name)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+    if not user_all:
+        proj_id_proj = db.session.query(Project.project_id).filter(Project.proj_name == project_name).first()
+        collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+        for proj in collab_proj_id:
+            if proj == proj_id_proj:
+                collab_all = db.session.query(Project.proj_name, Task.task_id,Task.task_item).filter((Project.project_id == proj) & (Task.project_id == proj)& (Task.is_active == 't') ). all()
+                return collab_all
+    else:
+        return user_all       
 
 def display_card_project(email):
     
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
+    
+    user_proj = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
 
+    # collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    # print(collab_proj_id)
+    
+    # if collab_proj_id:
+    #     for proj in collab_proj_id:
+
+    #         collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Task.is_active == 't') ). all()
+    #         print(collab_projs)    
+    
+    #     user_proj.extend(collab_projs)
+
+    # print(user_proj)
+ 
+
+    return user_proj 
+    
 
 def display_today_project(email):
     
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date == now)&
+    user_today = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date == now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
-    # return Project.query.filter(Project.due_date <= now).all()
+    
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Project.due_date == now)& (Task.is_active == 't') ). all()
+            print(collab_projs)    
+    
+        user_today.extend(collab_projs)
+
+    print(user_today)
+    # else:
+    #     user_collab_proj = user_proj
+
+    return user_today 
 
 def display_upcoming_project(email):
 
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date > now)&
+    user_up = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date > now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Project.due_date > now)& (Task.is_active == 't') ). all()
+            print(collab_projs)    
+    
+        user_up.extend(collab_projs)
+
+    print(user_up)
+    # else:
+    #     user_collab_proj = user_proj
+
+    return user_up 
 
 def past_due(email):
 
     now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date < now)&
+    user_past = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date < now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Project.due_date < now)& (Task.is_active == 't') ). all()
+            print(collab_projs)    
+    
+        user_past.extend(collab_projs)
+
+    print(user_past)
+    # else:
+    #     user_collab_proj = user_proj
+
+    return user_past
 
 
 def add_label(label_name, user_id, project_id):
@@ -109,9 +185,27 @@ def add_label(label_name, user_id, project_id):
 
 def display_labels(email):
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Label.label_name, Task.task_item).filter((Label.user_id == user_id) & (Label.project_id == Project.project_id)&
+    user_label = db.session.query(Label.label_name, Task.task_item).filter((Label.user_id == user_id) & (Label.project_id == Project.project_id)&
     (Project.project_id == Task.project_id) & (Task.is_active == 't')).all()
-    # return Label.query.filter(Label.user_id==user_id).all()
+    
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Label.label_name, Task.task_item).filter((Label.project_id == proj)&
+                           (Project.project_id == proj)& (Task.project_id == proj) & (Task.is_active == 't')).all()
+            
+            print(collab_projs)    
+    
+        user_label.extend(collab_projs)
+
+    print(user_label)
+    # else:
+    #     user_collab_proj = user_proj
+
+    return user_label 
 
 
 def add_favourites(project_id, user_id):
@@ -126,8 +220,26 @@ def add_favourites(project_id, user_id):
 def display_favourite(email):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    return db.session.query(Project.proj_name, Task.task_item).filter((Favourite.project_id == Project.project_id) & (Favourite.user_id == user_id) &
+    user_favs = db.session.query(Project.proj_name, Task.task_item).filter((Favourite.project_id == Project.project_id) & (Favourite.user_id == user_id) &
     (Project.user_id == user_id) & (Project.project_id == Task.project_id) & (Task.is_active == 't')).all()
+
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Favourite.project_id == proj)&
+                           (Project.project_id == proj)& (Task.project_id == proj) & (Task.is_active == 't')).all()
+            
+            print(collab_projs)    
+    
+        user_favs.extend(collab_projs)
+
+    print(user_favs)
+   
+
+    return user_favs 
 
 
 def add_task(task_item, project_id, is_active, order_id, assignee):
@@ -142,13 +254,25 @@ def add_task(task_item, project_id, is_active, order_id, assignee):
 def edit_task(email, assignee, order_id, proj_name, task_item):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
-    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
-    # tsk_id = db.session.query(Task.task_id).filter((Task.task_item == task_item)&(Project.proj_name == proj_name)).first()
-    etask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
-    etask.task_item = task_item
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).first()   
+
     
-    db.session.commit()
+    if proj_id:
+        etask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
+        etask.task_item = task_item
+        db.session.commit()
+    else: 
+        collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+        proj_id_proj = db.session.query(Project.project_id).filter(Project.proj_name == proj_name).first()
+        print(proj_id_proj)
+
+        for proj in collab_proj_id:
+            if proj == proj_id_proj:
+                    etask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj)).first()
+                    print(etask)
+                    etask.task_item = task_item
+                    db.session.commit()
+
 
 def edit_new_task(email, assignee, order_id, proj_name, task_item):
 
@@ -164,11 +288,23 @@ def edit_new_task(email, assignee, order_id, proj_name, task_item):
 def remove_task(email, assignee, order_id, proj_name):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
-    # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
-    rtask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).one()
-    db.session.delete(rtask)    
-    db.session.commit()
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).first()
+
+    if proj_id:    
+        rtask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).one()
+        db.session.delete(rtask)    
+        db.session.commit()
+    else:
+        collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+        proj_id_proj = db.session.query(Project.project_id).filter(Project.proj_name == proj_name).first()
+        print(proj_id_proj)
+
+        for proj in collab_proj_id:
+            if proj == proj_id_proj:
+                    rtask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj)).one()
+                    db.session.delete(rtask)    
+                    db.session.commit()
+
 
 def remove_new_task(email, assignee, order_id, proj_name):
 
@@ -182,13 +318,24 @@ def remove_new_task(email, assignee, order_id, proj_name):
 def complete_task(email, assignee, order_id, proj_name, is_active):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
-    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).one()    
+    proj_id = db.session.query(Project.project_id).filter((Project.proj_name == proj_name)&(Project.user_id == user_id)).first()    
     # task = Task(task_item=task_item, project_id=project_id, order_id=order_id, assignee=assignee)
-    ctask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
-    ctask.is_active = is_active
-    
-    db.session.commit()
+    if proj_id: 
+        ctask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj_id)).first()
+        ctask.is_active = is_active
+        db.session.commit()
+    else:
+        collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+        proj_id_proj = db.session.query(Project.project_id).filter(Project.proj_name == proj_name).first()
+        print(proj_id_proj)
 
+        for proj in collab_proj_id:
+            if proj == proj_id_proj:
+                ctask = Task.query.filter((Task.task_id == order_id) & (Task.project_id == proj)).first()
+                ctask.is_active = is_active
+                db.session.commit()
+
+    
 def complete_new_task(email, assignee, order_id, proj_name, is_active):
 
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
@@ -219,9 +366,19 @@ def add_collaborator(user_id, project_id):
 
     return collaborator
 
-def display_collab(collab_id):
+def display_shared_project(email):
 
-    return Collaborator.query.filter_by(collab_id=collab_id).one()
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Task.is_active == 't') ). all()
+            print(collab_projs)    
+    
+        return collab_projs
 
 
 if __name__ == '__main__':

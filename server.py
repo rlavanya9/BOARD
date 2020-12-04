@@ -83,7 +83,9 @@ def project_detail():
         is_active = True
 
     order_id =data['order_id']
-    assignee = data['assignee']
+    
+    assignee = data.get('assignee', None) # collaborator steps
+    
     items = data['task_item']
 
     proj_exists = crud.display_project(pname)
@@ -108,6 +110,11 @@ def project_detail():
 
         # add details to task table
         new_tasks = crud.add_task(items, proj_id, is_active, order_id, assignee)
+
+        #add details to assignee table - collaborator steps
+        if assignee:
+            assign_id = crud.get_user_id(assignee)
+            new_assign = crud.add_collaborator(assign_id,proj_id)
 
     return jsonify(email)
 
@@ -360,11 +367,25 @@ def labl_tasks():
     return jsonify([label_dict])
     
 
-# @app.route('/assignee')
-# def assign_tasks():
-
-#     assign = crud.display_tasks_by_assignee()
-#     return jsonify(assign)
+@app.route('/shared.json', methods=["POST"])
+def shared_project():
+    """view shared projects"""
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    shared = crud.display_shared_project(email)
+    print(shared)
+    proj_name = ''
+    shared_dict = {}
+    for element in shared:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in shared_dict:
+            shared_dict[proj_name].append(task_item)
+        else:
+            shared_dict[proj_name] = [task_item]
+    return jsonify([shared_dict])
 
 
 

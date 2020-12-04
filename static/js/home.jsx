@@ -38,6 +38,12 @@ const SidebarData = [
         path: '/label',
         cName: 'nav-text'
     },
+    {
+        title: 'Shared with me',
+        path: '/shared',
+        cName: 'nav-text'
+    },
+
 
 ]
 

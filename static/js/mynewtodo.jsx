@@ -103,7 +103,7 @@ const useCallback = React.useCallback
 const useRef = React.useRef
 const useState = React.useState
 
-const NewTask = ({ showTask, setShowTask, email, projName, labelName, emailFromStorage,dueDate,fav}) => {
+const NewTask = ({ showTask, setShowTask, email, projName, labelName, emailFromStorage,dueDate,fav, assignName}) => {
     const TaskRef = React.useRef();
 
     
@@ -138,7 +138,7 @@ const NewTask = ({ showTask, setShowTask, email, projName, labelName, emailFromS
       <React.Fragment>
         {showTask ? (
           <Backgroundb onClick={closeTask} ref={TaskRef}>
-              <NewTodoList showTask={showTask} email={email} projName={projName} labelName={labelName} dueDate={dueDate} fav={fav} />
+              <NewTodoList showTask={showTask} email={email} projName={projName} labelName={labelName} dueDate={dueDate} fav={fav} assignName={assignName}/>
           </Backgroundb>
         ) : null}
       </React.Fragment>
@@ -154,6 +154,7 @@ function NewProjContainer() {
     const [showTask, setShowTask] = React.useState(false);
     const [projName, setProjName] = React.useState('')
     const [labelName, setLabelName] = React.useState('')
+    const [assignName, setAssignName] = React.useState('')
     const [fav, setFav] = React.useState(false)
     const [dueDate, setDueDate] = React.useState('2020-12-09')
     const history = useHistory()
@@ -163,6 +164,7 @@ function NewProjContainer() {
         setShowTask(prev => !prev);
         setProjName(projName);
         setLabelName(labelName);
+        setAssignName(assignName);
         setFav(fav);
         setDueDate(dueDate);
         };
@@ -174,6 +176,10 @@ function NewProjContainer() {
     function handleLabelChange(evt){
     setLabelName(evt.target.value)
     }
+
+    function handleAssignChange(evt){
+      setAssignName(evt.target.value)
+      }
 
     function handleFavChange(evt){
     setFav(!fav) 
@@ -200,13 +206,13 @@ function NewProjContainer() {
         <FormLabelC htmlFor='fav'>Add to Favourites</FormLabelC>
         <FormLabelD htmlFor='due_date'>Due Date</FormLabelD>
         <FormInputD type='date' id='due_date' value={dueDate} min='2020-12-09' onChange={handleDateChange}></FormInputD>
-        <FormLabelN htmlFor='for'>Assignee</FormLabelN>
-        <FormInputN type='text' />
-        <FormButtonN type="submit" onClick={()=> openTask(projName,labelName,fav,dueDate)}>Add items </FormButtonN>
+        <FormLabelN htmlFor='for'>Collaborator</FormLabelN>
+        <FormInputN type='text' value={assignName} onChange={handleAssignChange} />
+        <FormButtonN type="submit" onClick={()=> openTask(projName,labelName,fav,dueDate,assignName)}>Add items </FormButtonN>
         <FormButtonN type="submit" onClick={handleSubmit}>Done, Take me Home</FormButtonN>
         </div>
     {/* <FormButton type="submit" value='alltask' onClick={openTask}>Edit items </FormButton> */}
-    <NewTask showTask={showTask} setShowTask={setShowTask} email={email} projName={projName} labelName={labelName} fav={fav} dueDate={dueDate} /> 
+    <NewTask showTask={showTask} setShowTask={setShowTask} email={email} projName={projName} labelName={labelName} fav={fav} dueDate={dueDate} assignName={assignName}/> 
     
     </React.Fragment>
 }
@@ -281,7 +287,7 @@ function NewTodoForm(props) {
     )
 }
 
-function NewTodo({todos, completeTodo, removeTodo, updateTodo, email, isActive, projName,labelName, fav, dueDate}) {
+function NewTodo({todos, completeTodo, removeTodo, updateTodo, email, isActive, projName,labelName, fav, dueDate, assignName}) {
     const [edit, setEdit] = React.useState({
         id: null,
         value: '',
@@ -316,7 +322,7 @@ function NewTodo({todos, completeTodo, removeTodo, updateTodo, email, isActive, 
     ));
 };
 
-function NewTodoList({email,projName,labelName,dueDate,fav}) {
+function NewTodoList({email,projName,labelName,dueDate,fav,assignName}) {
     const [todos, setTodos] = React.useState([]);
     const [isActive, setIsActive] = React.useState(true); 
     const [allProj, setAllProj] = React.useState([{}]);
@@ -333,7 +339,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
         const newTodo = [todo, ...todos];
         setTodos(newTodo);
         console.log(todo, ...todos);
-        let data = {proj_name: projName, task_item:todo.text, email:emailFromStorage, order_id: todo.id, isComplete: 't', assignee: emailFromStorage, label_name:labelName, favourite:fav, due_date:dueDate}
+        let data = {proj_name: projName, task_item:todo.text, email:emailFromStorage, order_id: todo.id, isComplete: 't', assignee:assignName, label_name:labelName, favourite:fav, due_date:dueDate}
         fetch('/projdet',{method: "POST",  body: JSON.stringify(data),  headers: {
           'Content-Type': 'application/json'}} )
         .then(response => response.json())
@@ -349,7 +355,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item )));
         console.log('*****update todo is running******')
-        let data ={email:emailFromStorage, proj_name:projName, task_item: newValue.text, assignee:emailFromStorage, order_id: todoId, isComplete: 't'}
+        let data ={email:emailFromStorage, proj_name:projName, task_item: newValue.text, assignee:assignName, order_id: todoId, isComplete: 't'}
         fetch('/enewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
@@ -360,7 +366,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
     const removeTodo = id => {
         const removedArr = [...todos].filter(todo => todo.id !==id);
         console.log('*****remove todo is running******')
-        let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: 't'}
+        let data ={email:emailFromStorage, proj_name:projName, assignee:assignName, order_id: id, isComplete: 't'}
         fetch('/rnewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
@@ -374,7 +380,7 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
           if (todo.id === id) {
             todo.isComplete = !todo.isComplete;
             console.log('*****complete todo is running******')
-            let data ={email:emailFromStorage, proj_name:projName, assignee:emailFromStorage, order_id: id, isComplete: todo.isComplete}
+            let data ={email:emailFromStorage, proj_name:projName, assignee:assignName, order_id: id, isComplete: todo.isComplete}
             fetch('/cnewproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
                 'Content-Type': 'application/json'}} )
             .then(response => response.json())
@@ -392,8 +398,8 @@ function NewTodoList({email,projName,labelName,dueDate,fav}) {
     return(
         <div className='new-todo'>
             <h1>what's the Plan for Today?</h1>
-            <NewTodoForm onSubmit={addTodo}  email={email} isActive={isActive}email={email} projName={projName} labelName={labelName} fav={fav} dueDate={dueDate} />
-            <NewTodo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} isActive={isActive} projName={projName} labelName={labelName} dueDate={dueDate} fav={fav} />
+            <NewTodoForm onSubmit={addTodo}  email={email} isActive={isActive}email={email} projName={projName} labelName={labelName} fav={fav} dueDate={dueDate} assignName={assignName}/>
+            <NewTodo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo} updateTodo={updateTodo} isActive={isActive} projName={projName} labelName={labelName} dueDate={dueDate} fav={fav} assignName={assignName} />
         </div>
         
     );
