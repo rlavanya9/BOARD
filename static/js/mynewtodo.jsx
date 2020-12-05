@@ -156,7 +156,7 @@ function NewProjContainer() {
     const [labelName, setLabelName] = React.useState('')
     const [assignName, setAssignName] = React.useState('')
     const [fav, setFav] = React.useState(false)
-    const [dueDate, setDueDate] = React.useState('2020-12-09')
+    const [dueDate, setDueDate] = React.useState('2020-12-06')
     const history = useHistory()
   
 
@@ -205,7 +205,7 @@ function NewProjContainer() {
         <FormInputC type='checkbox' checked={fav} onChange={handleFavChange} />
         <FormLabelC htmlFor='fav'>Add to Favourites</FormLabelC>
         <FormLabelD htmlFor='due_date'>Due Date</FormLabelD>
-        <FormInputD type='date' id='due_date' value={dueDate} min='2020-12-09' onChange={handleDateChange}></FormInputD>
+        <FormInputD type='date' id='due_date' value={dueDate} min='2020-12-06' onChange={handleDateChange}></FormInputD>
         <FormLabelN htmlFor='for'>Collaborator</FormLabelN>
         <FormInputN type='text' value={assignName} onChange={handleAssignChange} />
         <FormButtonN type="submit" onClick={()=> openTask(projName,labelName,fav,dueDate,assignName)}>Add items </FormButtonN>

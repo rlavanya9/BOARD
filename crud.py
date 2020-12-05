@@ -84,6 +84,30 @@ def display_card_project(email):
     user_proj = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
 
+    collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
+    print(collab_proj_id)
+    
+    if collab_proj_id:
+        for proj in collab_proj_id:
+
+            collab_projs = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == proj)& (Task.project_id == proj) & (Task.is_active == 't') ). all()
+            print(collab_projs)    
+    
+        user_proj.extend(collab_projs)
+
+    print(user_proj)
+ 
+
+    return user_proj 
+
+def display_home_project(email):
+    
+    now = datetime.now()
+    user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
+    
+    user_proj = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
+    (Project.user_id == user_id) & (Task.is_active == 't') ). all()
+
     # collab_proj_id = db.session.query(Collaborator.project_id).filter(Collaborator.user_id == user_id).all()
     # print(collab_proj_id)
     

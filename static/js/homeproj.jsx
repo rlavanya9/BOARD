@@ -7,7 +7,7 @@ function HomeProjContainer() {
     React.useEffect(() => {
         console.log('*****useEffect is running******')
         let data ={email:emailFromStorage}
-        fetch('/cardproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
+        fetch('/homeproj.json',{method: "POST",  body: JSON.stringify(data),  headers: {
             'Content-Type': 'application/json'}} )
         .then(response => response.json())
         .then(data => setHomeProj(data));
@@ -62,7 +62,7 @@ function HomeProj() {
           display: "flex",
           justifycontent:"flex-start",
           alignItems:"flex-start",
-          height:"50vh",
+          height:"40vh",
           flexWrap:"wrap"
       }}>
         <HomeProjContainer />

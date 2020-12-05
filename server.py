@@ -261,6 +261,26 @@ def card_project():
             allcard_dict[proj_name] = [task_item]
     return jsonify([allcard_dict])
 
+@app.route('/homeproj.json', methods=["POST"])
+def home_project():
+    """view today's projects"""
+    data = request.get_json()
+    print(data)
+    
+    email = data['email']
+    homecards = crud.display_home_project(email)
+    print(homecards)
+    proj_name = ''
+    homecard_dict = {}
+    for element in homecards:
+        proj_name = element[0]
+        task_item = element[1]
+        if proj_name in homecard_dict:
+            homecard_dict[proj_name].append(task_item)
+        else:
+            homecard_dict[proj_name] = [task_item]
+    return jsonify([homecard_dict])
+
 
 @app.route('/tproj.json', methods=["POST"])
 def today_project():

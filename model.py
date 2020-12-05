@@ -37,7 +37,7 @@ class Label(db.Model):
     __tablename__ = 'labels'
 
     label_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    label_name = db.Column(db.String(20), nullable=False)
+    label_name = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.project_id'))
 
@@ -67,7 +67,7 @@ class Task(db.Model):
     __tablename__ = 'tasks'
 
     task_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    task_item = db.Column(db.String(20))
+    task_item = db.Column(db.String(50))
     project_id = db.Column(db.Integer, db.ForeignKey('projects.project_id'))
     is_active = db.Column(db.Boolean, default=True)
     order_id = db.Column(db.Integer)
