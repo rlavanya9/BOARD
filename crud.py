@@ -1,6 +1,7 @@
 """CRUD operations."""
 from model import db, User, Project, Label, Favourite, Task, Collaborator, connect_to_db
-from datetime import datetime
+# from datetime import datetime
+import datetime
 
 def add_user(email, password):
 
@@ -62,7 +63,7 @@ def get_proj_id(project_name):
 
 def display_all_project(email,project_name):
     
-    now = datetime.now()
+    # now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     user_all = db.session.query(Project.proj_name, Task.task_id,Task.task_item).filter((Project.project_id == Task.project_id)&(Project.proj_name == project_name)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
@@ -78,7 +79,7 @@ def display_all_project(email,project_name):
 
 def display_card_project(email):
     
-    now = datetime.now()
+    # now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     
     user_proj = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
@@ -102,7 +103,7 @@ def display_card_project(email):
 
 def display_home_project(email):
     
-    now = datetime.now()
+    # now = datetime.now()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     
     user_proj = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&
@@ -127,7 +128,9 @@ def display_home_project(email):
 
 def display_today_project(email):
     
-    now = datetime.now()
+    now = datetime.date.today()
+    print('today date')
+    print(now)
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     user_today = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date == now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
@@ -151,7 +154,8 @@ def display_today_project(email):
 
 def display_upcoming_project(email):
 
-    now = datetime.now()
+    # now = datetime.now()
+    now = datetime.date.today()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     user_up = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date > now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
@@ -175,7 +179,8 @@ def display_upcoming_project(email):
 
 def past_due(email):
 
-    now = datetime.now()
+    # now = datetime.now()
+    now = datetime.date.today()
     user_id = db.session.query(User.user_id).filter((User.email == email)&(User.is_active == 't')).one()
     user_past = db.session.query(Project.proj_name, Task.task_item).filter((Project.project_id == Task.project_id)&(Project.due_date < now)&
     (Project.user_id == user_id) & (Task.is_active == 't') ). all()
