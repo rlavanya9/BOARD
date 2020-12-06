@@ -1,6 +1,4 @@
 # BOARD 
-<br>
-<br>
 BOARD is a web app that can be used to categorize and organize tasks. In BOARD, users can create projects and add tasks to projects. Once the projects and tasks are created, users will have the ability to edit/delete/mark complete the tasks in a project. Users can also favorite projects so that they can group all their favorite projects and view them on a single page. BOARD lets users assign labels to projects so that multiple projects can be grouped by labels. Users can also assign due dates to the projects thereby having the ability to group projects based on due dates. BOARD supports collaboration. It allows users to add other BOARD users as collaborators to projects so that multiple users can work on a project.
 <br>
 
