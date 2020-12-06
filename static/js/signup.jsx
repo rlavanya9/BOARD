@@ -85,7 +85,7 @@ const useForm = (callback, validate) => {
                 // setIsSubmitting(true);
                 history.push('/')
       }     else {
-                alert('Email already in use, cannot create account.')
+                alert(data)
            };
     });
       

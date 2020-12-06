@@ -27,7 +27,9 @@ def register_user():
     password = data['password']
     confirmpswd = data['confirmpswd']
     if ((email != '') and (password != '') and (confirmpswd == password)) :
+        print(f"email: {email}")
         existing_user = crud.check_user(email)
+        print(f"existing_user: {existing_user}")
 
 
         if existing_user:
@@ -36,6 +38,7 @@ def register_user():
             new_user = crud.add_user(email,password)
             return jsonify("Account created! please log in")
     else:
+        print("in else")
         return jsonify("Enter valid email and password")
 
 
