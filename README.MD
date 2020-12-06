@@ -19,32 +19,32 @@
 
 
 * Login and Home Page
-![](gifs/login and home.gif)
+![](gifs/login_n_home.gif)
 
 
 
 * Add a New Project, give a Label name, assign due date, add to favourites
-![](gifs/addproject.gif)
+![](gifs/add_project.gif)
 
 
 
 * Edit Tasks
-![](gifs/edit tasks.gif)
+![](gifs/edit_tasks.gif)
 
 
 
 * Add a Collaborator and assign due dates
-![](gifs/add a collaborator.gif)
+![](gifs/add_collab.gif)
 
 
 
 * Shared with me
-![](gifs/shared with me.gif)
+![](gifs/shared_with_me.gif)
 
 
 
 * Board for all projects that are past due
-![](gifs/past due.jpeg)
+![](gifs/past_due.jpeg)
 
 
 
