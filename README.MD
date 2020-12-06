@@ -9,4 +9,4 @@
 # Features
 
 About Us - A quick intro
-![about us](gifs/aboutus.gif)
+![](gifs/aboutus.gif)
