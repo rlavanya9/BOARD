@@ -8,5 +8,5 @@
 
 # Features
 
-About Us - A quick intro
+* About Us - A quick intro
 ![](gifs/aboutus.gif)
