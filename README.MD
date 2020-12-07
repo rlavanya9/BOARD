@@ -1,5 +1,24 @@
 # BOARD 
-BOARD is a web app that can be used to categorize and organize tasks. In BOARD, users can create projects and add tasks to projects. Once the projects and tasks are created, users will have the ability to edit/delete/mark complete the tasks in a project. Users can also favorite projects so that they can group all their favorite projects and view them on a single page. BOARD lets users assign labels to projects so that multiple projects can be grouped by labels. Users can also assign due dates to the projects thereby having the ability to group projects based on due dates. BOARD supports collaboration. It allows users to add other BOARD users as collaborators to projects so that multiple users can work on a project.
+BOARD is a platform/tool that can be used to categorize and organise tasks. 
+This is something that is universal and can be used by people from all walks of life.
+ 
+It helps us keep track of things so we don’t miss them and our day is more organized.
+It’s an Indispensable tool both in business and in personal life.
+ 
+In Board, users can create Projects and add tasks to projects. Projects help you organize your tasks into separate lists.Just listing out and organizing your tasks can be a huge relief when you’re feeling overwhelmed.
+
+Users can add new projects/tasks, edit/delete and mark complete the tasks.
+
+Users can also favorite projects to keep the most important tasks close at hand.it helps you separate your highest impact tasks from the everyday noise.
+
+Board lets users assign labels to projects to categorize what type of work it is.
+you could filter tasks based on the specific people you need to follow up with. It is a useful way of segmenting tasks, so you can easily see only the tasks that you can realistically work on based on the context or situation that you’re in. You can quickly view all tasks with the same label 
+
+Users have the option to give a due date to the projects. So important, yet so easy to forget. you can make sure you never miss a thing by adding due dates.
+
+Your today and upcoming views let you see all of your tasks across all of your projects that are due today, this week, or any week in the future.Your upcoming makes it easy to plan your week ahead of time.
+
+Board supports collaboration,It allows the user to add other BOARD users  as collaborators to projects so that multiple users can add/edit/remove/complete tasks in a project.
 <br>
 
 # Contents
@@ -121,4 +140,4 @@ $ python3 server.py
 
 ## <a name="aboutme"></a> About the Developer
 
-Lavanya was a Mainframe Technology Lead at Morgan Stanley where she was responsible for developing and maintaining applications for the Wealth and Asset management Division. Prior to that, she developed Billing and Commission modules for Guardian Life Insurance.  She has her B.S. in Computer Science Engineering and over 10 years of experience in the Software industry. She is also a Certified Scrum Master. Having gained knowledge and expertise in backend/mainframe technology, she wanted to pursue more expressive, flexible languages like Python and JavaScript and to gain hands-on experience working on them. She's looking forward to an exciting career building innovative and robust applications. She can be found on [LinkedIn](https://www.linkedin.com/in/lavanya-rangaswamy/) and on [Github](https://github.com/rlavanya9).
+Lavanya was a Mainframe Technology Lead at Morgan Stanley where she was responsible for developing and maintaining applications for the Wealth and Asset management Division. Prior to that, she developed Billing and Commission modules for Guardian Life Insurance.  She has her B.S. in Computer Science Engineering and over 10 years of experience in the Software industry. She is also a Certified Scrum Master. Having gained knowledge and expertise in backend/mainframe technology, she wanted to pursue more progressive, flexible languages like Python and JavaScript and to gain hands-on experience working on them. She's looking forward to an exciting career building innovative and robust applications. She can be found on [LinkedIn](https://www.linkedin.com/in/lavanya-rangaswamy/) and on [Github](https://github.com/rlavanya9).
